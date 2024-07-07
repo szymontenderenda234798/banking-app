@@ -2,39 +2,39 @@ package pl.kurs.java.account.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityManager;
+import org.hibernate.SessionFactory;
+import org.hibernate.stat.Statistics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import pl.kurs.java.account.Main;
-import pl.kurs.java.account.exception.AccountNotFoundException;
+import pl.kurs.java.account.model.Account;
+import pl.kurs.java.account.model.command.CreateAccountCommand;
+import pl.kurs.java.account.model.command.UpdateAccountCommand;
 import pl.kurs.java.account.model.dto.AccountDto;
 import pl.kurs.java.account.repository.AccountRepository;
 import pl.kurs.java.account.service.AccountService;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.springframework.test.context.ActiveProfiles;
+import pl.kurs.java.account.util.RestResponsePage;
 
 
 @AutoConfigureMockMvc
@@ -54,81 +54,290 @@ class AccountControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private EntityManager entityManager;
+
+    private Statistics statistics;
+
+    @PostConstruct
+    public void init() {
+        SessionFactory sessionFactory = entityManager.getEntityManagerFactory().unwrap(SessionFactory.class);
+        sessionFactory.getStatistics().setStatisticsEnabled(true);
+        statistics = sessionFactory.getStatistics();
+    }
+
     @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    void clear() {
+        reset(accountRepository);
+        reset(accountService);
+        accountRepository.deleteAll();
+        statistics.clear();
     }
 
     @Test
-    void shouldGetAllAccounts() throws Exception {
+    public void testGetAccount_ShouldGetAccount_WhenGivenValidPesel() throws Exception {
         // given
-        AccountDto accountDto1 = new AccountDto("12345678901", "John", "Doe", "12345678901234567890123456", 1000.0, 0);
-        AccountDto accountDto2 = new AccountDto("98765432109", "Jane", "Smith", "65432109876543210987654321", 2000.0, 500.0);
-        List<AccountDto> content = List.of(accountDto1, accountDto2);
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<AccountDto> page = new PageImpl<>(content, pageable, content.size());
-        when(accountRepository.findAll(pageable)).thenReturn(page);
+        Account account = prepareAccountsInDb().get(0);
 
-        // when
+        //when
+        MvcResult result = mockMvc.perform(get("/api/v1/account/{pesel}", account.getPesel())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //then
+        String response = result.getResponse().getContentAsString();
+        AccountDto accountDto = objectMapper.readValue(response, AccountDto.class);
+
+        assertAccountAndAccountDtoEquals(account, accountDto);
+
+        verify(accountService, times(1)).getAccount(account.getPesel());
+        verify(accountRepository, times(1)).findByPesel(account.getPesel());
+    }
+
+    @Test
+    public void testGetAccount_ShouldReturnNotFound_WhenInvalidPesel() throws Exception {
+        //when
+        mockMvc.perform(get("/api/v1/account/{pesel}", "123")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+        //then
+        verify(accountService, times(1)).getAccount(any());
+        verify(accountRepository, times(1)).findByPesel(any());
+    }
+
+
+    @Test
+    public void testGetAccounts_ShouldGetAllAcounts() throws Exception {
+        //given
+        List<Account> accounts = prepareAccountsInDb();
+
+        //when
         MvcResult result = mockMvc.perform(get("/api/v1/account")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        // then
+        //then
         String response = result.getResponse().getContentAsString();
-        PageDto<AccountDto> accounts = objectMapper.readValue(response, new TypeReference<>() {
+        Page<AccountDto> accountDtos = objectMapper.readValue(response, new TypeReference<RestResponsePage<AccountDto>>() {
         });
 
-        verify(accountService, times(1)).getAccounts(any(Pageable.class));
-        assertEquals(accounts.getContent().get(0), accountDto1);
-        assertEquals(accounts.getContent().get(1), accountDto2);
-    }
-
-
-    @Test
-    void testGetAccount_ShouldReturnAccount_WhenPeselIsValid() throws Exception {
-        // given
-        String pesel = "12345678901";
-        AccountDto accountDto = new AccountDto(pesel, "John", "Doe", "accountNumber", 1000.0, 500.0);
-        when(accountService.getAccount(pesel)).thenReturn(accountDto);
-
-        // when & then
-        mockMvc.perform(get("/api/v1/account/{pesel}", pesel)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.pesel").value(pesel))
-                .andExpect(jsonPath("$.name").value("John"))
-                .andExpect(jsonPath("$.surname").value("Doe"))
-                .andExpect(jsonPath("$.accountNumber").value("accountNumber"))
-                .andExpect(jsonPath("$.plnBalance").value(1000.0))
-                .andExpect(jsonPath("$.usdBalance").value(500.0));
-
-        verify(accountService, times(1)).getAccount(pesel);
+        assertEquals(accounts.size(), accountDtos.getContent().size());
+        for (int i = 0; i < accounts.size(); i++) {
+            assertAccountAndAccountDtoEquals(accounts.get(i), accountDtos.getContent().get(i));
+        }
+        verify(accountService, times(1)).getAccounts(any());
+        verify(accountRepository, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
-    void testGetAccount_ShouldThrowAccountNotFoundException_WhenPeselDoesNotExist() throws Exception {
+    void testCreateAccount_ShouldCreateAccount_WhenGivenValidData() throws Exception {
         // given
-        String pesel = "12345678901";
-        when(accountService.getAccount(pesel)).thenThrow(new AccountNotFoundException(pesel));
+        CreateAccountCommand command = new CreateAccountCommand("64060431778", "John", "Doe", 1000.0);
 
-        // when & then
-        mockMvc.perform(get("/api/v1/account/{pesel}", pesel)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+        // when
+        MvcResult result = mockMvc.perform(post("/api/v1/account")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isCreated())
+                .andReturn();
 
-        verify(accountService, times(1)).getAccount(pesel);
+        //then
+        String response = result.getResponse().getContentAsString();
+        AccountDto accountDto = objectMapper.readValue(response, AccountDto.class);
+
+        assertEquals(command.pesel(), accountDto.pesel());
+        assertEquals(command.name(), accountDto.name());
+        assertEquals(command.surname(), accountDto.surname());
+        assertEquals(command.plnBalance(), accountDto.plnBalance());
+        verify(accountService, times(1)).createAccount(any(CreateAccountCommand.class));
+        verify(accountRepository, times(1)).save(any(Account.class));
     }
 
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Getter
-    public static class PageDto<T> {
-        private List<T> content;
-        private int number;
-        private int size;
-        private int totalPages;
-        private long totalElements;
+    @Test
+    void testCreateAccount_ShouldNotCreateAccount_WhenPeselIndicatesUnderage() throws Exception {
+        // given
+        CreateAccountCommand command = new CreateAccountCommand("14260486496", "szymon", "surnameee", 500.0);
+
+        // when
+        mockMvc.perform(post("/api/v1/account")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0].message").value("PESEL_NOT_ADULT"));
+
+        //then
+        verify(accountService, never()).createAccount(any(CreateAccountCommand.class));
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+    @Test
+    void testCreateAccount_ShouldNotCreateAccount_WhenInvalidPeselFormat() throws Exception {
+        // given
+        CreateAccountCommand command = new CreateAccountCommand("12345", "John", "Doe", 1000.0);
+
+        // when
+        mockMvc.perform(post("/api/v1/account")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0].message").value("INVALID_PESEL_FORMAT"));
+
+        //then
+        verify(accountService, never()).createAccount(any(CreateAccountCommand.class));
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+    @Test
+    void testCreateAccount_ShouldNotCreateAccount_WhenNameContainsNonLetterCharacters() throws Exception {
+        // given
+        CreateAccountCommand command = new CreateAccountCommand("95062011567", "John123", "Doe", 1000.0);
+
+        // when
+        mockMvc.perform(post("/api/v1/account")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0].message").value("INVALID_NAME_FORMAT_ONLY_LETTERS_ALLOWED"));
+
+        //then
+        verify(accountService, never()).createAccount(any(CreateAccountCommand.class));
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+    @Test
+    void testCreateAccount_ShouldNotCreateAccount_WhenSurnameContainsNonLetterCharacters() throws Exception {
+        // given
+        CreateAccountCommand command = new CreateAccountCommand("64060431778", "John", "Doe123", 1000.0);
+
+        // when
+        mockMvc.perform(post("/api/v1/account")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0].message").value("INVALID_SURNAME_FORMAT_ONLY_LETTERS_ALLOWED"));
+
+        //then
+        verify(accountService, never()).createAccount(any(CreateAccountCommand.class));
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+    @Test
+    void testCreateAccount_ShouldNotCreateAccount_WhenNegativeBalance() throws Exception {
+        // given
+        CreateAccountCommand command = new CreateAccountCommand("64060431778", "John", "Doe", -1000.0);
+
+        // when
+        mockMvc.perform(post("/api/v1/account")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0].message").value("INVALID_BALANCE_NEGATIVE_VALUE"));
+
+        //then
+        verify(accountService, never()).createAccount(any(CreateAccountCommand.class));
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+    @Test
+    public void testGetAccounts_ShouldCountQuerries() throws Exception {
+        //when
+        mockMvc.perform(get("/api/v1/account")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        //then
+        long executionCount = statistics.getQueryExecutionCount();
+        assertEquals(1L, executionCount);
+
+    }
+
+    @Test
+    public void testGetAccount_ShouldCountQuerries() throws Exception {
+        //given
+        Account account = prepareAccountsInDb().get(0);
+
+        //when
+        mockMvc.perform(get("/api/v1/account/{pesel}", account.getPesel())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        //then
+        long executionCount = statistics.getQueryExecutionCount();
+        assertEquals(1L, executionCount);
+    }
+
+    @Test
+    public void testCreateAccount_ShouldCountQuerries() throws Exception {
+        //given
+        CreateAccountCommand createAccountCommand = new CreateAccountCommand("64060431778", "John", "Doe", 1000.0);
+
+        //when
+        mockMvc.perform(post("/api/v1/account")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(createAccountCommand)))
+                .andExpect(status().isCreated());
+
+        //then
+        long executionCount = statistics.getQueryExecutionCount();
+        assertEquals(1L, executionCount);
+    }
+
+    @Test
+    public void testUpdateAccount_ShouldCountQuerries() throws Exception {
+        //given
+        Account account = prepareAccountsInDb().get(0);
+        UpdateAccountCommand updateAccountCommand = new UpdateAccountCommand(account.getPesel(), "tomek", "romek");
+
+        //when
+        mockMvc.perform(put("/api/v1/account/{pesel}", "12345678901")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(updateAccountCommand)))
+                .andExpect(status().isOk());
+
+        //then
+        long executionCount = statistics.getQueryExecutionCount();
+        assertEquals(1L, executionCount);
+    }
+
+    @Test
+    public void testDeleteAccount_ShouldCountQuerries() throws Exception {
+        //given
+        Account account = prepareAccountsInDb().get(0);
+
+        //when
+        mockMvc.perform(delete("/api/v1/account/{pesel}", account.getPesel())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        //then
+        long executionCount = statistics.getQueryExecutionCount();
+        assertEquals(1L, executionCount);
+    }
+
+    private List<Account> prepareAccountsInDb() {
+        Account account1 = new Account("12345678901", "John", "Doe", "12345678901234567890123456", 1000.0, 0);
+        Account account2 = new Account("98765432109", "Jane", "Smith", "65432109876543210987654321", 2000.0, 500.0);
+        List<Account> accounts = List.of(account1, account2);
+        accountRepository.saveAll(accounts);
+        return accounts;
+    }
+
+    private void assertAccountAndAccountDtoEquals(Account account, AccountDto accountDto) {
+        assertEquals(account.getPesel(), accountDto.pesel());
+        assertEquals(account.getName(), accountDto.name());
+        assertEquals(account.getSurname(), accountDto.surname());
+        assertEquals(account.getAccountNumber(), accountDto.accountNumber());
+        assertEquals(account.getPlnBalance(), accountDto.plnBalance());
+        assertEquals(account.getUsdBalance(), accountDto.usdBalance());
+    }
+
+    private static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

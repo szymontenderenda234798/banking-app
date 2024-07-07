@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IsAdult {
-    String message() default "Owner must be at least 18 years old";
+    String message() default "PESEL_NOT_ADULT";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

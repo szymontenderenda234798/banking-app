@@ -9,9 +9,6 @@ public record UpdateAccountCommand(
         @NonNull
         String currentPesel,
 
-        @NonNull @ValidPesel @IsAdult
-        String newPesel,
-
         @NonNull @Pattern(regexp = "^[a-zA-Z]+$", message = "Name must contain only letters")
         String newName,
 

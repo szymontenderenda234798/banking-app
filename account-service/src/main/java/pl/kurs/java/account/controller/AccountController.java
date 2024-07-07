@@ -42,7 +42,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<AccountDto> createAccount(@RequestBody @Valid CreateAccountCommand createAccountCommand) {
+    public ResponseEntity<AccountDto> createAccount(@Valid @RequestBody CreateAccountCommand createAccountCommand) {
         log.info("Adding account for: {} {}", createAccountCommand.name(), createAccountCommand.surname());
         return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(createAccountCommand));
     }
@@ -53,7 +53,7 @@ public class AccountController {
         return ResponseEntity.ok(accountService.updateAccount(pesel, updateAccountCommand));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{pesel}")
     public ResponseEntity<Void> deleteAccount(@PathVariable String pesel) {
         log.info("Deleting account with pesel: {}", pesel);
         accountService.deleteAccount(pesel);

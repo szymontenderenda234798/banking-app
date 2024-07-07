@@ -1,5 +1,6 @@
 package pl.kurs.java.account.validate.validator;
 
+import com.fasterxml.jackson.core.JsonToken;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,14 @@ public class AdultValidator implements ConstraintValidator<IsAdult, String> {
     private final DateProvider dateProvider;
 
     @Override
-    public void initialize(IsAdult constraintAnnotation) {}
+    public void initialize(IsAdult constraintAnnotation) {
+    }
 
     @Override
     public boolean isValid(String pesel, ConstraintValidatorContext context) {
+        if (!pesel.matches("\\d{11}")) {
+            return false;
+        }
         LocalDate birthDate = extractBirthDate(pesel);
         LocalDate now = dateProvider.provideNow().toLocalDate();
         return Period.between(birthDate, now).getYears() >= 18;

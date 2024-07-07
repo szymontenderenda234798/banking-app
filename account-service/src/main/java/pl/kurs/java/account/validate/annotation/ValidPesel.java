@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidPesel {
-    String message() default "Invalid PESEL format";
+    String message() default "INVALID_PESEL_FORMAT";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

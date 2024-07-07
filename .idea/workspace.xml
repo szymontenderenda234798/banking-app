@@ -5,7 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21cedd33-22c2-4871-b776-14540b4b3b98" name="Changes" comment="banking app">
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/error/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/error/dto/FieldError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/exception/AccountWithGivenPeselAlreadyExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/util/RestResponsePage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/resources/application-test.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/controller/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/command/CreateAccountCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/command/CreateAccountCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/command/UpdateAccountCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/command/UpdateAccountCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/repository/AccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/validate/annotation/IsAdult.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/validate/annotation/IsAdult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/validate/annotation/ValidPesel.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/validate/annotation/ValidPesel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/validate/validator/AdultValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/validate/validator/AdultValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/validate/validator/PeselValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/validate/validator/PeselValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/controller/AccountControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/controller/AccountControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/service/AccountServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/service/AccountServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,29 +39,26 @@
       <list>
         <option value="AnnotationType" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "szymontenderenda234798"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;szymontenderenda234798&quot;
   }
-}]]></component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="7917ed59-0ba1-46ab-a9f2-7768fd3dd9f2" />
-  </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:/szymontenderenda234798/banking.git",
-    "accountId": "5646ed34-917a-4119-bb0f-f689c4373c2f"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/szymontenderenda234798/banking-app.git&quot;,
+    &quot;accountId&quot;: &quot;d74d5873-893d-46dd-b45c-1a67abb89d9d&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -54,7 +73,17 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.AccountControllerTest.executor": "Run",
+    "JUnit.AccountControllerTest.shouldGetAccount.executor": "Run",
+    "JUnit.AccountControllerTest.shouldGetAccounts.executor": "Run",
     "JUnit.AccountControllerTest.shouldGetAllAccounts.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldCreateAccount_WhenGivenValidData.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenInvalidPeselFormat.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNameContainsNonLetterCharacters.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNegativeBalance.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenPeselIndicatesUnderage.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenSurnameContainsNonLetterCharacters.executor": "Run",
+    "JUnit.AccountControllerTest.testGetAccount_ShouldReturnBadRequest_WhenInvalidPesel.executor": "Run",
+    "JUnit.AccountControllerTest.testGetAccount_ShouldReturnNotFound_WhenInvalidPesel.executor": "Run",
     "JUnit.AccountControllerTest.testGetAccounts_ShouldReturnAccounts_WhenRequestIsValid.executor": "Run",
     "JUnit.AccountServiceTest.executor": "Run",
     "JUnit.AccountServiceTest.testGenerateRandomAccountNumber_ShouldGenerate26DigitNumber.executor": "Run",
@@ -63,6 +92,16 @@
     "JUnit.AccountServiceTest.testGetAccounts_ShouldReturnPagedAccounts.executor": "Run",
     "JUnit.AccountServiceTest.testIsAccountNumberUnique_ShouldHandleNullAccountNumber.executor": "Run",
     "JUnit.AccountServiceTest.testUpdateAccount_ShouldThrowCurrentPeselNotMatchingException_WhenPeselDoesNotMatch.executor": "Run",
+    "JUnit.All in account-service.executor": "Run",
+    "JUnit.MockTest.countQueries.executor": "Run",
+    "JUnit.MockTest.countQueries2.executor": "Run",
+    "JUnit.MockTest.countQueriesCreateAccount.executor": "Run",
+    "JUnit.MockTest.countQueriesGetAccount.executor": "Run",
+    "JUnit.MockTest.countQueriesGetAccounts.executor": "Run",
+    "JUnit.MockTest.executor": "Run",
+    "JUnit.pl.kurs.java.account in account-service.executor": "Run",
+    "Maven.banking-app [clean].executor": "Run",
+    "Maven.banking-app [install].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -75,8 +114,10 @@
     "Spring Boot.discovery-service-8761.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/tende/IdeaProjects/banking-app",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -87,10 +128,13 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.selected.configurable": "MavenSettings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -109,7 +153,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.AccountControllerTest.shouldGetAllAccounts">
+  <component name="RunManager" selected="JUnit.AccountControllerTest">
     <configuration name="AccountControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
       <extension name="coverage">
@@ -125,7 +169,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AccountControllerTest.shouldGetAllAccounts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AccountControllerTest.testCreateAccount_ShouldCreateAccount_WhenGivenValidData" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
       <extension name="coverage">
         <pattern>
@@ -135,13 +179,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="pl.kurs.java.account.controller" />
       <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.controller.AccountControllerTest" />
-      <option name="METHOD_NAME" value="shouldGetAllAccounts" />
+      <option name="METHOD_NAME" value="testCreateAccount_ShouldCreateAccount_WhenGivenValidData" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AccountControllerTest.testGetAccounts_ShouldReturnAccounts_WhenRequestIsValid" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNameContainsNonLetterCharacters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
       <extension name="coverage">
         <pattern>
@@ -151,38 +195,39 @@
       </extension>
       <option name="PACKAGE_NAME" value="pl.kurs.java.account.controller" />
       <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.controller.AccountControllerTest" />
-      <option name="METHOD_NAME" value="testGetAccounts_ShouldReturnAccounts_WhenRequestIsValid" />
+      <option name="METHOD_NAME" value="testCreateAccount_ShouldNotCreateAccount_WhenNameContainsNonLetterCharacters" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AccountServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNegativeBalance" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.kurs.java.account.service.*" />
+          <option name="PATTERN" value="pl.kurs.java.account.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.kurs.java.account.service" />
-      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.service.AccountServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="pl.kurs.java.account.controller" />
+      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.controller.AccountControllerTest" />
+      <option name="METHOD_NAME" value="testCreateAccount_ShouldNotCreateAccount_WhenNegativeBalance" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AccountServiceTest.testUpdateAccount_ShouldThrowCurrentPeselNotMatchingException_WhenPeselDoesNotMatch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenSurnameContainsNonLetterCharacters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.kurs.java.account.service.*" />
+          <option name="PATTERN" value="pl.kurs.java.account.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.kurs.java.account.service" />
-      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.service.AccountServiceTest" />
-      <option name="METHOD_NAME" value="testUpdateAccount_ShouldThrowCurrentPeselNotMatchingException_WhenPeselDoesNotMatch" />
+      <option name="PACKAGE_NAME" value="pl.kurs.java.account.controller" />
+      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.controller.AccountControllerTest" />
+      <option name="METHOD_NAME" value="testCreateAccount_ShouldNotCreateAccount_WhenSurnameContainsNonLetterCharacters" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -216,22 +261,22 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="JUnit.AccountControllerTest.testCreateAccount_ShouldCreateAccount_WhenGivenValidData" />
+      <item itemvalue="JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNameContainsNonLetterCharacters" />
+      <item itemvalue="JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNegativeBalance" />
+      <item itemvalue="JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenSurnameContainsNonLetterCharacters" />
       <item itemvalue="JUnit.AccountControllerTest" />
-      <item itemvalue="JUnit.AccountControllerTest.shouldGetAllAccounts" />
-      <item itemvalue="JUnit.AccountControllerTest.testGetAccounts_ShouldReturnAccounts_WhenRequestIsValid" />
-      <item itemvalue="JUnit.AccountServiceTest" />
-      <item itemvalue="JUnit.AccountServiceTest.testUpdateAccount_ShouldThrowCurrentPeselNotMatchingException_WhenPeselDoesNotMatch" />
       <item itemvalue="Spring Boot.account-service-8888" />
       <item itemvalue="Spring Boot.api-gateway-8070" />
       <item itemvalue="Spring Boot.discovery-service-8761" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.AccountControllerTest.shouldGetAllAccounts" />
-        <item itemvalue="JUnit.AccountControllerTest.testGetAccounts_ShouldReturnAccounts_WhenRequestIsValid" />
         <item itemvalue="JUnit.AccountControllerTest" />
-        <item itemvalue="JUnit.AccountServiceTest" />
-        <item itemvalue="JUnit.AccountServiceTest.testUpdateAccount_ShouldThrowCurrentPeselNotMatchingException_WhenPeselDoesNotMatch" />
+        <item itemvalue="JUnit.AccountControllerTest.testCreateAccount_ShouldCreateAccount_WhenGivenValidData" />
+        <item itemvalue="JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNegativeBalance" />
+        <item itemvalue="JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenSurnameContainsNonLetterCharacters" />
+        <item itemvalue="JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNameContainsNonLetterCharacters" />
       </list>
     </recent_temporary>
   </component>
@@ -257,6 +302,10 @@
       <workItem from="1720370092741" duration="8000" />
       <workItem from="1720370133234" duration="624000" />
       <workItem from="1720371034080" duration="231000" />
+      <workItem from="1720425211784" duration="70000" />
+      <workItem from="1720425291956" duration="909000" />
+      <workItem from="1720426273673" duration="3467000" />
+      <workItem from="1720431444588" duration="14446000" />
     </task>
     <servers />
   </component>

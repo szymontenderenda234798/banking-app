@@ -1,10 +1,12 @@
 package pl.kurs.java.account.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import pl.kurs.java.account.exception.AccountNotFoundException;
 import lombok.RequiredArgsConstructor;
+import pl.kurs.java.account.exception.AccountWithGivenPeselAlreadyExistsException;
 import pl.kurs.java.account.exception.CurrentPeselNotMatchingException;
 import pl.kurs.java.account.model.Account;
 import pl.kurs.java.account.model.command.CreateAccountCommand;
@@ -22,15 +24,19 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
 
+    @Transactional(readOnly = true)
     public Page<AccountDto> getAccounts(Pageable pageable) {
         return accountRepository.findAll(pageable)
                 .map(AccountDto::fromAccount);
     }
 
+    @Transactional(readOnly = true)
+    @Cacheable(cacheNames = "accounts", key = "#pesel")
     public AccountDto getAccount(String pesel) {
-        return accountRepository.findById(pesel)
-                .map(AccountDto::fromAccount)
+        Account account = accountRepository.findByPesel(pesel)
                 .orElseThrow(() -> new AccountNotFoundException(pesel));
+        System.out.println("Account: " + account);
+        return AccountDto.fromAccount(account);
     }
 
     @Transactional
@@ -38,9 +44,8 @@ public class AccountService {
         if (!currentPesel.equals(updateAccountCommand.currentPesel())) {
             throw new CurrentPeselNotMatchingException(currentPesel, updateAccountCommand.currentPesel());
         }
-        Account account = accountRepository.findById(currentPesel)
+        Account account = accountRepository.findByPesel(currentPesel)
                 .orElseThrow(() -> new AccountNotFoundException(currentPesel));
-        account.setPesel(updateAccountCommand.newPesel());
         account.setName(updateAccountCommand.newName());
         account.setSurname(updateAccountCommand.newSurname());
         Account updatedAccount = accountRepository.save(account);
@@ -49,6 +54,9 @@ public class AccountService {
 
     @Transactional
     public AccountDto createAccount(CreateAccountCommand createAccountCommand) {
+        if (accountRepository.findByPesel(createAccountCommand.pesel()).isPresent()) {
+            throw new AccountWithGivenPeselAlreadyExistsException();
+        }
         Account account = accountRepository.save(new Account(
                 createAccountCommand.pesel(),
                 createAccountCommand.name(),
@@ -57,6 +65,13 @@ public class AccountService {
                 createAccountCommand.plnBalance(),
                 0));
         return AccountDto.fromAccount(account);
+    }
+
+    @Transactional
+    public void deleteAccount(String pesel) {
+        Account account = accountRepository.findByPesel(pesel)
+                .orElseThrow(() -> new AccountNotFoundException(pesel));
+        accountRepository.delete(account);
     }
 
     String generateUniqueAccountNumber() {
@@ -84,11 +99,5 @@ public class AccountService {
 
     boolean isAccountNumberUnique(String accountNumber) {
         return accountRepository.findByAccountNumber(accountNumber).isEmpty();
-    }
-
-    public void deleteAccount(String pesel) {
-        Account account = accountRepository.findById(pesel)
-                .orElseThrow(() -> new AccountNotFoundException(pesel));
-        accountRepository.delete(account);
     }
 }

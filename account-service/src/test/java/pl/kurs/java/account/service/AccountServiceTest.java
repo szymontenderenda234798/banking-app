@@ -54,7 +54,7 @@ class AccountServiceTest {
         // given
         String pesel = "12345678901";
         Account account = new Account(pesel, "John", "Doe", "12345678901234567890123456", 1000.0, 0);
-        when(accountRepository.findById(pesel)).thenReturn(Optional.of(account));
+        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.of(account));
 
         // when
         AccountDto accountDto = accountService.getAccount(pesel);
@@ -209,10 +209,10 @@ class AccountServiceTest {
     void testUpdateAccount_ShouldUpdateSuccessfully_WhenPeselMatches() {
         // given
         String currentPesel = "12345678901";
-        UpdateAccountCommand updateCommand = new UpdateAccountCommand(currentPesel, currentPesel, "NewName", "NewSurname");
+        UpdateAccountCommand updateCommand = new UpdateAccountCommand(currentPesel, "NewName", "NewSurname");
         Account existingAccount = new Account(currentPesel, "OldName", "OldSurname", "accountNumber", 1000.0, 0);
 
-        when(accountRepository.findById(currentPesel)).thenReturn(Optional.of(existingAccount));
+        when(accountRepository.findByPesel(currentPesel)).thenReturn(Optional.of(existingAccount));
         when(accountRepository.save(any(Account.class))).thenReturn(existingAccount);
 
         // when
@@ -220,11 +220,10 @@ class AccountServiceTest {
 
         // then
         assertNotNull(updatedAccountDto);
-        assertEquals(updateCommand.newPesel(), updatedAccountDto.pesel());
         assertEquals(updateCommand.newName(), updatedAccountDto.name());
         assertEquals(updateCommand.newSurname(), updatedAccountDto.surname());
 
-        verify(accountRepository, times(1)).findById(currentPesel);
+        verify(accountRepository, times(1)).findByPesel(currentPesel);
         verify(accountRepository, times(1)).save(existingAccount);
     }
 
@@ -232,14 +231,14 @@ class AccountServiceTest {
     void testUpdateAccount_ShouldThrowAccountNotFoundException_WhenAccountDoesNotExist() {
         // given
         String currentPesel = "12345678901";
-        UpdateAccountCommand updateCommand = new UpdateAccountCommand(currentPesel, currentPesel, "NewName", "NewSurname");
+        UpdateAccountCommand updateCommand = new UpdateAccountCommand(currentPesel, "NewName", "NewSurname");
 
-        when(accountRepository.findById(currentPesel)).thenReturn(Optional.empty());
+        when(accountRepository.findByPesel(currentPesel)).thenReturn(Optional.empty());
 
         // when & then
         assertThrows(AccountNotFoundException.class, () -> accountService.updateAccount(currentPesel, updateCommand));
 
-        verify(accountRepository, times(1)).findById(currentPesel);
+        verify(accountRepository, times(1)).findByPesel(currentPesel);
         verify(accountRepository, never()).save(any(Account.class));
     }
 
@@ -249,7 +248,7 @@ class AccountServiceTest {
         String currentPeselFromPathVariable = "12345678901";
         String currentPeselFromCommand = "98765432109";
         String newPesel = "11122233344";
-        UpdateAccountCommand updateCommand = new UpdateAccountCommand(currentPeselFromCommand, newPesel, "NewName", "NewSurname");
+        UpdateAccountCommand updateCommand = new UpdateAccountCommand(currentPeselFromCommand, "NewName", "NewSurname");
 
         // When & Then
         assertThrows(CurrentPeselNotMatchingException.class, () -> accountService.updateAccount(currentPeselFromPathVariable, updateCommand));
@@ -264,13 +263,13 @@ class AccountServiceTest {
         String pesel = "12345678901";
         Account existingAccount = new Account(pesel, "John", "Doe", "accountNumber", 1000.0, 0);
 
-        when(accountRepository.findById(pesel)).thenReturn(Optional.of(existingAccount));
+        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.of(existingAccount));
 
         // when
         accountService.deleteAccount(pesel);
 
         // then
-        verify(accountRepository, times(1)).findById(pesel);
+        verify(accountRepository, times(1)).findByPesel(pesel);
         verify(accountRepository, times(1)).delete(existingAccount);
     }
 
@@ -279,12 +278,12 @@ class AccountServiceTest {
         // given
         String pesel = "12345678901";
 
-        when(accountRepository.findById(pesel)).thenReturn(Optional.empty());
+        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.empty());
 
         // when & then
         assertThrows(AccountNotFoundException.class, () -> accountService.deleteAccount(pesel));
 
-        verify(accountRepository, times(1)).findById(pesel);
+        verify(accountRepository, times(1)).findByPesel(pesel);
         verify(accountRepository, never()).delete(any(Account.class));
     }
 }
