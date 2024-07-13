@@ -5,25 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21cedd33-22c2-4871-b776-14540b4b3b98" name="Changes" comment="working on account crud tests (still some testing to do)">
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/consumer/AccountServiceConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/rabbitmq/RabbitMQConnectionFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/Exchange.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/producer/CurrencyExchangeProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/rabbitmq/RabbitMQConnectionFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/ExchangeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/web/ExchangeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/resources/application-test.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/resources/changes/create-tables.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/resources/liquibase-master.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/tende.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-client/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/model/ExchangeRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/config/MessageQueueConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/config/properties/MessageQueueProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/exception/PeselMismatchException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/ExchangeRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/RequestStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/command/CreateExchangeRequestCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/repository/ExchangeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/provider/DateProvider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/web/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/exception/AccountWithGivenPeselAlreadyExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/exception/AccountWithGivenPeselAlreadyExistsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/command/UpdateAccountCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/command/UpdateAccountCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/controller/AccountControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/web/AccountControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/provider/DateProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/provider/DateProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/discovery-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/Exchange.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/rabbitmq/RabbitMQConnectionFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/ExchangeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/ExchangeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/web/ExchangeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/web/ExchangeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,8 +41,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="AnnotationType" />
-        <option value="Interface" />
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -54,12 +60,12 @@
     &quot;assignee&quot;: &quot;szymontenderenda234798&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/szymontenderenda234798/banking-app.git&quot;,
-    &quot;accountId&quot;: &quot;d74d5873-893d-46dd-b45c-1a67abb89d9d&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/szymontenderenda234798/banking-app.git",
+    "accountId": "7053a802-7145-4af7-9d19-4eeccac4b8ff"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -71,80 +77,82 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JUnit.AccountControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.shouldGetAccount.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.shouldGetAccounts.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.shouldGetAllAccounts.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testCreateAccount_ShouldCountQuerries.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testCreateAccount_ShouldCreateAccount_WhenGivenValidData.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenAccountWithGivenPeselExists.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenInvalidPeselFormat.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNameContainsNonLetterCharacters.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNegativeBalance.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenPeselIndicatesUnderage.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenSurnameContainsNonLetterCharacters.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testDeleteAccount_ShouldReturnNotFound_WhenAccountDoesNotExist.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testGetAccount_ShouldReturnBadRequest_WhenInvalidPesel.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testGetAccount_ShouldReturnNotFound_WhenInvalidPesel.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testGetAccounts_ShouldReturnAccounts_WhenRequestIsValid.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testUpdateAccount_ShouldNotUpdateAccount_WhenNameContainsNonLetterCharacters.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testUpdateAccount_ShouldNotUpdateAccount_WhenPeselDoesNotMatch.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testUpdateAccount_ShouldReturnNotFound_WhenAccountDoesNotExist.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountControllerTest.testUpdateAccount_ShouldUpdateAccount_WhenGivenValidData.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountServiceTest.testGenerateRandomAccountNumber_ShouldGenerate26DigitNumber.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountServiceTest.testGenerateUniqueAccountNumber_ShouldRetryUntilUniqueNumberIsGenerated.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountServiceTest.testGetAccount_ShouldReturnAccountDto_WhenAccountExists.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountServiceTest.testGetAccounts_ShouldReturnPagedAccounts.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountServiceTest.testIsAccountNumberUnique_ShouldHandleNullAccountNumber.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.AccountServiceTest.testUpdateAccount_ShouldThrowCurrentPeselNotMatchingException_WhenPeselDoesNotMatch.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in account-service.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MockTest.countQueries.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MockTest.countQueries2.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MockTest.countQueriesCreateAccount.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MockTest.countQueriesGetAccount.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MockTest.countQueriesGetAccounts.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MockTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.account in account-service.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.java in account-service.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.pl.kurs.java.account in account-service.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.banking-app [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.banking-app [install].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.account-service-8888.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.api-gateway-8070.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.discovery-service-8761.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.exchange-service-8900.executor&quot;: &quot;Run&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tende/IdeaProjects/banking-app/account-service/src/main/java/pl/kurs/java/account&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/tende/OneDrive/Desktop/kurs/zadanie/banking_app/account-service/src/main/java/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.AccountControllerTest.executor": "Run",
+    "JUnit.AccountControllerTest.shouldGetAccount.executor": "Run",
+    "JUnit.AccountControllerTest.shouldGetAccounts.executor": "Run",
+    "JUnit.AccountControllerTest.shouldGetAllAccounts.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldCountQuerries.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldCreateAccount_WhenGivenValidData.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenAccountWithGivenPeselExists.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenInvalidPeselFormat.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNameContainsNonLetterCharacters.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNegativeBalance.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenPeselIndicatesUnderage.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenSurnameContainsNonLetterCharacters.executor": "Run",
+    "JUnit.AccountControllerTest.testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel.executor": "Run",
+    "JUnit.AccountControllerTest.testDeleteAccount_ShouldReturnNotFound_WhenAccountDoesNotExist.executor": "Run",
+    "JUnit.AccountControllerTest.testGetAccount_ShouldReturnBadRequest_WhenInvalidPesel.executor": "Run",
+    "JUnit.AccountControllerTest.testGetAccount_ShouldReturnNotFound_WhenInvalidPesel.executor": "Run",
+    "JUnit.AccountControllerTest.testGetAccounts_ShouldReturnAccounts_WhenRequestIsValid.executor": "Run",
+    "JUnit.AccountControllerTest.testUpdateAccount_ShouldNotUpdateAccount_WhenNameContainsNonLetterCharacters.executor": "Run",
+    "JUnit.AccountControllerTest.testUpdateAccount_ShouldNotUpdateAccount_WhenPeselDoesNotMatch.executor": "Run",
+    "JUnit.AccountControllerTest.testUpdateAccount_ShouldReturnNotFound_WhenAccountDoesNotExist.executor": "Run",
+    "JUnit.AccountControllerTest.testUpdateAccount_ShouldUpdateAccount_WhenGivenValidData.executor": "Run",
+    "JUnit.AccountServiceTest.executor": "Run",
+    "JUnit.AccountServiceTest.testGenerateRandomAccountNumber_ShouldGenerate26DigitNumber.executor": "Run",
+    "JUnit.AccountServiceTest.testGenerateUniqueAccountNumber_ShouldRetryUntilUniqueNumberIsGenerated.executor": "Run",
+    "JUnit.AccountServiceTest.testGetAccount_ShouldReturnAccountDto_WhenAccountExists.executor": "Run",
+    "JUnit.AccountServiceTest.testGetAccounts_ShouldReturnPagedAccounts.executor": "Run",
+    "JUnit.AccountServiceTest.testIsAccountNumberUnique_ShouldHandleNullAccountNumber.executor": "Run",
+    "JUnit.AccountServiceTest.testUpdateAccount_ShouldThrowCurrentPeselNotMatchingException_WhenPeselDoesNotMatch.executor": "Run",
+    "JUnit.All in account-service.executor": "Run",
+    "JUnit.MockTest.countQueries.executor": "Run",
+    "JUnit.MockTest.countQueries2.executor": "Run",
+    "JUnit.MockTest.countQueriesCreateAccount.executor": "Run",
+    "JUnit.MockTest.countQueriesGetAccount.executor": "Run",
+    "JUnit.MockTest.countQueriesGetAccounts.executor": "Run",
+    "JUnit.MockTest.executor": "Run",
+    "JUnit.account in account-service.executor": "Run",
+    "JUnit.java in account-service.executor": "Run",
+    "JUnit.pl.kurs.java.account in account-service.executor": "Run",
+    "Maven.banking-app [clean].executor": "Run",
+    "Maven.banking-app [install].executor": "Run",
+    "Maven.exchange-client [clean].executor": "Run",
+    "Maven.exchange-client [install].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.Main.executor": "Run",
+    "Spring Boot.account-service-8888.executor": "Run",
+    "Spring Boot.api-gateway-8070.executor": "Run",
+    "Spring Boot.discovery-service-8761.executor": "Run",
+    "Spring Boot.exchange-service-8900.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "openjdk-22",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/tende/IdeaProjects/banking-app/account-service/src/main/java/pl/kurs/java/account",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/tende/OneDrive/Desktop/kurs/zadanie/banking-app/exchange-service/src/main/java/pl/kurs/java/exchange/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.spelling",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -173,7 +181,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.account-service-8888">
+  <component name="RunManager" selected="Spring Boot.exchange-service-8900">
     <configuration name="AccountControllerTest.testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
       <extension name="coverage">
@@ -222,18 +230,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AccountControllerTest.testUpdateAccount_ShouldReturnNotFound_WhenAccountDoesNotExist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in account-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.kurs.java.account.web.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.kurs.java.account.controller" />
-      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.web.AccountControllerTest" />
-      <option name="METHOD_NAME" value="testUpdateAccount_ShouldReturnNotFound_WhenAccountDoesNotExist" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -285,10 +285,10 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="JUnit.All in account-service" />
       <item itemvalue="JUnit.AccountControllerTest.testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel" />
       <item itemvalue="JUnit.AccountControllerTest.testDeleteAccount_ShouldReturnNotFound_WhenAccountDoesNotExist" />
       <item itemvalue="JUnit.AccountControllerTest.testUpdateAccount_ShouldNotUpdateAccount_WhenNameContainsNonLetterCharacters" />
-      <item itemvalue="JUnit.AccountControllerTest.testUpdateAccount_ShouldReturnNotFound_WhenAccountDoesNotExist" />
       <item itemvalue="JUnit.account in account-service" />
       <item itemvalue="Spring Boot.exchange-service-8900" />
       <item itemvalue="Spring Boot.account-service-8888" />
@@ -297,11 +297,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in account-service" />
         <item itemvalue="JUnit.account in account-service" />
         <item itemvalue="JUnit.AccountControllerTest.testDeleteAccount_ShouldReturnNotFound_WhenAccountDoesNotExist" />
         <item itemvalue="JUnit.AccountControllerTest.testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel" />
         <item itemvalue="JUnit.AccountControllerTest.testUpdateAccount_ShouldNotUpdateAccount_WhenNameContainsNonLetterCharacters" />
-        <item itemvalue="JUnit.AccountControllerTest.testUpdateAccount_ShouldReturnNotFound_WhenAccountDoesNotExist" />
       </list>
     </recent_temporary>
   </component>
@@ -331,6 +331,7 @@
       <workItem from="1720425291956" duration="909000" />
       <workItem from="1720426273673" duration="3467000" />
       <workItem from="1720431444588" duration="26223000" />
+      <workItem from="1720881660550" duration="10300000" />
     </task>
     <task id="LOCAL-00001" summary="working on account crud tests (still some testing to do)">
       <option name="closed" value="true" />
