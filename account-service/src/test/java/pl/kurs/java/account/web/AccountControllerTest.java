@@ -1,4 +1,4 @@
-package pl.kurs.java.account.controller;
+package pl.kurs.java.account.web;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import pl.kurs.java.account.Main;
+import pl.kurs.java.account.exception.AccountWithGivenPeselAlreadyExistsException;
+import pl.kurs.java.account.exception.CurrentPeselNotMatchingException;
 import pl.kurs.java.account.model.Account;
 import pl.kurs.java.account.model.command.CreateAccountCommand;
 import pl.kurs.java.account.model.command.UpdateAccountCommand;
@@ -27,7 +29,7 @@ import pl.kurs.java.account.service.AccountService;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -241,6 +243,147 @@ class AccountControllerTest {
     }
 
     @Test
+    void testCreateAccount_ShouldNotCreateAccount_WhenAccountWithGivenPeselExists() throws Exception {
+        // given
+        String existingPesel = "64060431778";
+        CreateAccountCommand command = new CreateAccountCommand(existingPesel, "John", "Doe", 1000.0);
+        String requestBody = asJsonString(command);
+        when(accountRepository.findByPesel(existingPesel)).thenReturn(java.util.Optional.of(new Account()));
+
+        // when
+        mockMvc.perform(post("/api/v1/account")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isConflict())
+                .andExpect(result -> assertInstanceOf(AccountWithGivenPeselAlreadyExistsException.class, result.getResolvedException()));
+
+        // then
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+    @Test
+    void testUpdateAccount_ShouldUpdateAccount_WhenGivenValidData() throws Exception {
+        // given
+        Account account = prepareAccountsInDb().get(0);
+        UpdateAccountCommand command = new UpdateAccountCommand(account.getPesel(), "Tomek", "Romek");
+
+        // when
+        MvcResult result = mockMvc.perform(put("/api/v1/account/{pesel}", account.getPesel())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // then
+        String response = result.getResponse().getContentAsString();
+        AccountDto accountDto = objectMapper.readValue(response, AccountDto.class);
+
+        assertEquals(command.currentPesel(), accountDto.pesel());
+        assertEquals(command.newName(), accountDto.name());
+        assertEquals(command.newSurname(), accountDto.surname());
+        assertNotEquals(account.getName(), accountDto.name());
+        assertNotEquals(account.getSurname(), accountDto.surname());
+        verify(accountService, times(1)).updateAccount(eq(account.getPesel()), any(UpdateAccountCommand.class));
+        verify(accountRepository, times(1)).save(any(Account.class));
+    }
+
+    @Test
+    void testUpdateAccount_ShouldNotUpdateAccount_WhenPeselDoesNotMatch() throws Exception {
+        // given
+        Account account = prepareAccountsInDb().get(0);
+        UpdateAccountCommand command = new UpdateAccountCommand("wrongPesel", "Tomek", "Romek");
+
+        // when
+        mockMvc.perform(put("/api/v1/account/{pesel}", account.getPesel())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isConflict())
+                .andExpect(result -> assertInstanceOf(CurrentPeselNotMatchingException.class, result.getResolvedException()));
+
+        // then
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+    @Test
+    void testUpdateAccount_ShouldReturnNotFound_WhenAccountDoesNotExist() throws Exception {
+        // given
+        UpdateAccountCommand command = new UpdateAccountCommand("nonexistentPesel", "Tomek", "Romek");
+
+        // when
+        mockMvc.perform(put("/api/v1/account/{pesel}", "nonexistentPesel")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isNotFound());
+
+        // then
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+    @Test
+    void testUpdateAccount_ShouldNotUpdateAccount_WhenNameContainsNonLetterCharacters() throws Exception {
+        // given
+        Account account = prepareAccountsInDb().get(0);
+        UpdateAccountCommand command = new UpdateAccountCommand(account.getPesel(), "Tomek123", "Romek");
+
+        // when
+        mockMvc.perform(put("/api/v1/account/{pesel}", account.getPesel())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0].message").value("INVALID_NAME_FORMAT_ONLY_LETTERS_ALLOWED"));
+
+        // then
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+    @Test
+    void testUpdateAccount_ShouldNotUpdateAccount_WhenSurnameContainsNonLetterCharacters() throws Exception {
+        // given
+        Account account = prepareAccountsInDb().get(0);
+        UpdateAccountCommand command = new UpdateAccountCommand(account.getPesel(), "Tomek", "Romek123");
+
+        // when
+        mockMvc.perform(put("/api/v1/account/{pesel}", account.getPesel())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0].message").value("INVALID_SURNAME_FORMAT_ONLY_LETTERS_ALLOWED"));
+
+        // then
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+    @Test
+    void testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel() throws Exception {
+        // given
+        Account account = prepareAccountsInDb().get(0);
+
+        // when
+        mockMvc.perform(delete("/api/v1/account/{pesel}", account.getPesel())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        // then
+        verify(accountService, times(1)).deleteAccount(account.getPesel());
+        verify(accountRepository, times(1)).delete(any(Account.class));
+    }
+
+    @Test
+    void testDeleteAccount_ShouldReturnNotFound_WhenAccountDoesNotExist() throws Exception {
+        // given
+        String nonExistentPesel = "nonexistentPesel";
+
+        // when
+        mockMvc.perform(delete("/api/v1/account/{pesel}", nonExistentPesel)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+
+        // then
+        verify(accountService, times(1)).deleteAccount(nonExistentPesel);
+        verify(accountRepository, never()).delete(any(Account.class));
+    }
+
+    @Test
     public void testGetAccounts_ShouldCountQuerries() throws Exception {
         //when
         mockMvc.perform(get("/api/v1/account")
@@ -281,7 +424,7 @@ class AccountControllerTest {
 
         //then
         long executionCount = statistics.getQueryExecutionCount();
-        assertEquals(1L, executionCount);
+        assertEquals(2L, executionCount);
     }
 
     @Test

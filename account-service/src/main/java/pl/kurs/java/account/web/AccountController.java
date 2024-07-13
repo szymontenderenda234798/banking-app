@@ -1,4 +1,4 @@
-package pl.kurs.java.account.controller;
+package pl.kurs.java.account.web;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -9,9 +9,9 @@ public record UpdateAccountCommand(
         @NonNull
         String currentPesel,
 
-        @NonNull @Pattern(regexp = "^[a-zA-Z]+$", message = "Name must contain only letters")
+        @NonNull @Pattern(regexp = "^[a-zA-Z]+$", message = "INVALID_NAME_FORMAT_ONLY_LETTERS_ALLOWED")
         String newName,
 
-        @NonNull @Pattern(regexp = "^[a-zA-Z]+$", message = "Surname must contain only letters")
+        @NonNull @Pattern(regexp = "^[a-zA-Z]+$", message = "INVALID_SURNAME_FORMAT_ONLY_LETTERS_ALLOWED")
         String newSurname) {
 }

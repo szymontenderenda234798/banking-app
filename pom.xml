@@ -12,6 +12,7 @@
         <module>discovery-service</module>
         <module>api-gateway</module>
         <module>account-service</module>
+        <module>exchange-service</module>
     </modules>
 
     <parent>
