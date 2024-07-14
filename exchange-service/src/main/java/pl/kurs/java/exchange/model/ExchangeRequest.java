@@ -6,10 +6,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.kurs.java.client.model.enums.ExchangeStatus;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -30,9 +30,9 @@ public class ExchangeRequest implements Serializable {
     private Double rate;
     private LocalDateTime requestTime;
     @Enumerated(EnumType.STRING)
-    private RequestStatus status;
+    private ExchangeStatus status;
 
-    public ExchangeRequest(String pesel, String currencyFrom, String currencyTo, Double amountFrom, Double amountTo, Double rate, LocalDateTime requestTime, RequestStatus status) {
+    public ExchangeRequest(String pesel, String currencyFrom, String currencyTo, Double amountFrom, Double amountTo, Double rate, LocalDateTime requestTime, ExchangeStatus status) {
         this.pesel = pesel;
         this.currencyFrom = currencyFrom;
         this.currencyTo = currencyTo;

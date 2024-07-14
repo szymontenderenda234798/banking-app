@@ -1,4 +1,4 @@
-package pl.kurs.java.exchange.service.producer;
+package pl.kurs.java.exchange.service.mom.producer;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import pl.kurs.java.client.config.MessageQueueConfig;
 import pl.kurs.java.client.model.ExchangeRequestDto;
 import pl.kurs.java.exchange.model.ExchangeRequest;
-import pl.kurs.java.exchange.model.RequestStatus;
+import pl.kurs.java.client.model.enums.ExchangeStatus;
 
 @Service
 @RequiredArgsConstructor
@@ -23,9 +23,9 @@ public class ExchangeRequestProducer {
         ExchangeRequestDto exchangeRequestDto = convertToExchangeRequestDto(exchangeRequest);
         try {
             rabbitTemplate.convertAndSend(messageQueueConfig.getExchangeRequestExchangeName(), messageQueueConfig.getExchangeRequestRoutingKey(), exchangeRequestDto);
-            exchangeRequest.setStatus(RequestStatus.APPROVED_FOR_PROCESSING);
+            exchangeRequest.setStatus(ExchangeStatus.APPROVED_FOR_PROCESSING);
         } catch (Exception e) {
-            exchangeRequest.setStatus(RequestStatus.ERROR_CONNECTING_TO_QUEUE);
+            exchangeRequest.setStatus(ExchangeStatus.ERROR_CONNECTING_TO_QUEUE);
         }
         return exchangeRequest;
     }

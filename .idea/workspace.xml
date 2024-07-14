@@ -4,26 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="21cedd33-22c2-4871-b776-14540b4b3b98" name="Changes" comment="working on account crud tests (still some testing to do)">
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/listener/ExchangeRequestListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/producer/ExchangeResponseProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/producer/ExchangeRequestProducer.java" afterDir="false" />
+    <list default="true" id="21cedd33-22c2-4871-b776-14540b4b3b98" name="Changes" comment="work in progress">
+      <change afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/model/ExchangeResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/current_rate_api/model/ApiResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/current_rate_api/service/CurrentRateApiCaller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/exception/ErrorDuringGetCurrentRateApiCallException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/exception/ExchangeRequestNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/mom/listener/ExchangeResponseListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/consumer/AccountServiceConsumer.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/rabbitmq/RabbitMQConnectionFactory.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/config/MessageQueueConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/MessageQueueConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/config/properties/MessageQueueProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/properties/MessageQueueProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/exception/PeselMismatchException.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/exception/PeselMismatchException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/RequestStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/RequestStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/producer/CurrencyExchangeProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/producer/ExchangeResponseProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/producer/ExchangeResponseProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/MessageQueueConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/MessageQueueConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/properties/MessageQueueProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/properties/MessageQueueProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/ExchangeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/ExchangeRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/RequestStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/model/enums/ExchangeStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/ExchangeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/ExchangeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/producer/ExchangeRequestProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/mom/producer/ExchangeRequestProducer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/web/ExchangeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/web/ExchangeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -329,7 +328,7 @@
       <workItem from="1720426273673" duration="3467000" />
       <workItem from="1720431444588" duration="26223000" />
       <workItem from="1720881660550" duration="10300000" />
-      <workItem from="1720950454658" duration="8099000" />
+      <workItem from="1720950454658" duration="17583000" />
     </task>
     <task id="LOCAL-00001" summary="working on account crud tests (still some testing to do)">
       <option name="closed" value="true" />
@@ -339,7 +338,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720448616215</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="work in progress">
+      <option name="closed" value="true" />
+      <created>1720958632549</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1720958632549</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -360,6 +367,31 @@
     <MESSAGE value="banking app" />
     <MESSAGE value="init commit" />
     <MESSAGE value="working on account crud tests (still some testing to do)" />
-    <option name="LAST_COMMIT_MESSAGE" value="working on account crud tests (still some testing to do)" />
+    <MESSAGE value="work in progress" />
+    <option name="LAST_COMMIT_MESSAGE" value="work in progress" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java</url>
+          <line>82</line>
+          <properties class="pl.kurs.java.account.service.AccountService" method="processExchangeRequest">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/mom/producer/ExchangeRequestProducer.java</url>
+          <line>21</line>
+          <properties class="pl.kurs.java.exchange.service.mom.producer.ExchangeRequestProducer" method="postExchangeRequestDtoToQueue">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -14,7 +14,10 @@ import pl.kurs.java.account.model.command.UpdateAccountCommand;
 import pl.kurs.java.account.model.dto.AccountDto;
 import org.springframework.stereotype.Service;
 import pl.kurs.java.account.repository.AccountRepository;
+import pl.kurs.java.account.service.producer.ExchangeResponseProducer;
 import pl.kurs.java.client.model.ExchangeRequestDto;
+import pl.kurs.java.client.model.ExchangeResponseDto;
+import pl.kurs.java.client.model.enums.ExchangeStatus;
 
 import java.security.SecureRandom;
 
@@ -24,6 +27,7 @@ import java.security.SecureRandom;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final ExchangeResponseProducer exchangeResponseProducer;
 
     @Transactional(readOnly = true)
     public Page<AccountDto> getAccounts(Pageable pageable) {
@@ -79,7 +83,9 @@ public class AccountService {
     public void processExchangeRequest(ExchangeRequestDto exchangeRequestDto) {
         Account account = accountRepository.findByPesel(exchangeRequestDto.getPesel())
                 .orElseThrow(() -> new AccountNotFoundException(exchangeRequestDto.getPesel()));
-        account.exchange(exchangeRequestDto.getCurrencyFrom(), exchangeRequestDto.getCurrencyTo(), exchangeRequestDto.getAmountFrom(), exchangeRequestDto.getAmountTo());
+        boolean exchangeResult = account.exchange(exchangeRequestDto.getCurrencyFrom(), exchangeRequestDto.getCurrencyTo(), exchangeRequestDto.getAmountFrom(), exchangeRequestDto.getAmountTo());
+        ExchangeStatus exchangeStatus = exchangeResult ? ExchangeStatus.COMPLETED : ExchangeStatus.REJECTED;
+        exchangeResponseProducer.postExchangeResponseDtoToQueue(new ExchangeResponseDto(exchangeRequestDto.getRequestId(), exchangeStatus));
         accountRepository.save(account);
     }
 
