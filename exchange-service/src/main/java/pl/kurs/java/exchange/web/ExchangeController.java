@@ -19,7 +19,7 @@ public class ExchangeController {
     private final ExchangeService exchangeService;
 
     @PostMapping("/{pesel}")
-    public void processExchangeRequest(@PathVariable String pesel, @RequestBody CreateExchangeRequestCommand createExchangeRequestCommand) {
+    public void processExchangeRequestCommand(@PathVariable String pesel, @RequestBody CreateExchangeRequestCommand createExchangeRequestCommand) {
         log.info("Processing exchange request for PESEL: {}", pesel);
         exchangeService.processExchangeRequestCommand(pesel, createExchangeRequestCommand);
     }

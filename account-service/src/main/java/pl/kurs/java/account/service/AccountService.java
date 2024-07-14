@@ -14,6 +14,7 @@ import pl.kurs.java.account.model.command.UpdateAccountCommand;
 import pl.kurs.java.account.model.dto.AccountDto;
 import org.springframework.stereotype.Service;
 import pl.kurs.java.account.repository.AccountRepository;
+import pl.kurs.java.client.model.ExchangeRequestDto;
 
 import java.security.SecureRandom;
 
@@ -72,6 +73,14 @@ public class AccountService {
         Account account = accountRepository.findByPesel(pesel)
                 .orElseThrow(() -> new AccountNotFoundException(pesel));
         accountRepository.delete(account);
+    }
+
+    @Transactional
+    public void processExchangeRequest(ExchangeRequestDto exchangeRequestDto) {
+        Account account = accountRepository.findByPesel(exchangeRequestDto.getPesel())
+                .orElseThrow(() -> new AccountNotFoundException(exchangeRequestDto.getPesel()));
+        account.exchange(exchangeRequestDto.getCurrencyFrom(), exchangeRequestDto.getCurrencyTo(), exchangeRequestDto.getAmountFrom(), exchangeRequestDto.getAmountTo());
+        accountRepository.save(account);
     }
 
     String generateUniqueAccountNumber() {

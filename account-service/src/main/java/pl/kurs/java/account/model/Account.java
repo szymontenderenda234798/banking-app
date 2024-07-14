@@ -21,4 +21,14 @@ public class Account {
     private String accountNumber;
     private double plnBalance;
     private double usdBalance;
+
+    public void exchange(String currencyFrom, String currencyTo, double amountFrom, double amountTo) {
+        if (currencyFrom.equals("PLN")) {
+            plnBalance -= amountFrom;
+            usdBalance += amountTo;
+        } else {
+            plnBalance += amountTo;
+            usdBalance -= amountFrom;
+        }
+    }
 }

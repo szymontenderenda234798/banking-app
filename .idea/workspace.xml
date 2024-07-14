@@ -5,32 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21cedd33-22c2-4871-b776-14540b4b3b98" name="Changes" comment="working on account crud tests (still some testing to do)">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/tende.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-client/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/model/ExchangeRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/config/MessageQueueConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/config/properties/MessageQueueProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/exception/PeselMismatchException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/ExchangeRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/RequestStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/command/CreateExchangeRequestCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/repository/ExchangeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/provider/DateProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/listener/ExchangeRequestListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/producer/ExchangeResponseProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/producer/ExchangeRequestProducer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/provider/DateProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/provider/DateProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discovery-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/discovery-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/Exchange.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/rabbitmq/RabbitMQConnectionFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/consumer/AccountServiceConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/rabbitmq/RabbitMQConnectionFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/config/MessageQueueConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/MessageQueueConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/config/properties/MessageQueueProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/properties/MessageQueueProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/exception/PeselMismatchException.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/exception/PeselMismatchException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/RequestStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/RequestStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/producer/CurrencyExchangeProducer.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/ExchangeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/ExchangeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/web/ExchangeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/web/ExchangeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exchange-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,12 +53,12 @@
     &quot;assignee&quot;: &quot;szymontenderenda234798&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/szymontenderenda234798/banking-app.git",
-    "accountId": "7053a802-7145-4af7-9d19-4eeccac4b8ff"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/szymontenderenda234798/banking-app.git&quot;,
+    &quot;accountId&quot;: &quot;7053a802-7145-4af7-9d19-4eeccac4b8ff&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -121,6 +114,7 @@
     "Maven.banking-app [install].executor": "Run",
     "Maven.exchange-client [clean].executor": "Run",
     "Maven.exchange-client [install].executor": "Run",
+    "Maven.exchange-service [install].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -138,7 +132,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "openjdk-22",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/tende/IdeaProjects/banking-app/account-service/src/main/java/pl/kurs/java/account",
+    "last_opened_file_path": "C:/Users/tende/OneDrive/Desktop/kurs/zadanie/banking-app/exchange-client/src/main/java/pl/kurs/java/client",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -158,6 +152,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\tende\OneDrive\Desktop\kurs\zadanie\banking-app\exchange-client\src\main\java\pl\kurs\java\client\" />
       <recent name="C:\Users\tende\IdeaProjects\banking-app\account-service\src\main\java\pl\kurs\java\account" />
       <recent name="C:\Users\tende\IdeaProjects\banking-app\currency-exchange-service\src\main\resources" />
     </key>
@@ -165,6 +160,8 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tende\OneDrive\Desktop\kurs\zadanie\banking-app\exchange-client\src\main\resources" />
+      <recent name="C:\Users\tende\OneDrive\Desktop\kurs\zadanie\banking-app\exchange-client\src\main\java\pl\kurs\java\client\config\properties" />
       <recent name="C:\Users\tende\IdeaProjects\banking-app\currency-exchange-service\src\main\resources\changes" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
@@ -181,7 +178,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.exchange-service-8900">
+  <component name="RunManager" selected="Spring Boot.account-service-8888">
     <configuration name="AccountControllerTest.testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
       <extension name="coverage">
@@ -332,6 +329,7 @@
       <workItem from="1720426273673" duration="3467000" />
       <workItem from="1720431444588" duration="26223000" />
       <workItem from="1720881660550" duration="10300000" />
+      <workItem from="1720950454658" duration="8099000" />
     </task>
     <task id="LOCAL-00001" summary="working on account crud tests (still some testing to do)">
       <option name="closed" value="true" />

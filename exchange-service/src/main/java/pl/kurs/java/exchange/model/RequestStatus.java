@@ -2,7 +2,7 @@ package pl.kurs.java.exchange.model;
 
 public enum RequestStatus {
     PENDING,
-    APPROVED,
-    REJECTED,
+    APPROVED_FOR_PROCESSING,
+    ERROR_CONNECTING_TO_QUEUE,
     COMPLETED
 }

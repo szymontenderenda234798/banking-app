@@ -21,3 +21,9 @@ spring:
             - Path=/api/v1/account/**
           filters:
             - Retry=3
+        - id: exchange-service
+          uri: lb://EXCHANGE-SERVICE
+          predicates:
+            - Path=/api/v1/exchange/**
+          filters:
+            - Retry=3

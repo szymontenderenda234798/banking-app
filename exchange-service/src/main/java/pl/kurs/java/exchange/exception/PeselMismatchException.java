@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.CONFLICT)
 public class PeselMismatchException extends RuntimeException {
-    public PeselMismatchException(String message) {
-        super(message);
+    public PeselMismatchException() {
     }
 }

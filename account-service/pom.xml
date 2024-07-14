@@ -72,6 +72,11 @@
             <artifactId>amqp-client</artifactId>
             <version>5.13.0</version>
         </dependency>
+        <dependency>
+            <groupId>pl.kurs.java</groupId>
+            <artifactId>exchange-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 
