@@ -1,4 +1,4 @@
-package pl.kurs.java.exchange.current_rate_api.model;
+package pl.kurs.java.exchange.service.current_rate_api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

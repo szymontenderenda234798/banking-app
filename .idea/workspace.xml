@@ -5,23 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21cedd33-22c2-4871-b776-14540b4b3b98" name="Changes" comment="work in progress">
-      <change afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/model/ExchangeResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/current_rate_api/model/ApiResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/current_rate_api/service/CurrentRateApiCaller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/exception/ErrorDuringGetCurrentRateApiCallException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/exception/ExchangeRequestNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/mom/listener/ExchangeResponseListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/model/AccountTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/service/mom/listener/ExchangeRequestListenerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/service/mom/producer/ExchangeResponseProducerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/config/ExchangeConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/test/java/pl/kurs/java/exchange/service/ExchangeServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/test/java/pl/kurs/java/exchange/service/current_rate_api/CurrentRateApiCallerServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/test/java/pl/kurs/java/exchange/service/mom/listener/ExchangeResponseListenerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/test/java/pl/kurs/java/exchange/service/mom/producer/ExchangeRequestProducerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/exchange-service/src/test/java/pl/kurs/java/exchange/web/ExchangeControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/model/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/producer/ExchangeResponseProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/producer/ExchangeResponseProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/MessageQueueConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/MessageQueueConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/properties/MessageQueueProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/config/properties/MessageQueueProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/ExchangeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/ExchangeRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/model/RequestStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-client/src/main/java/pl/kurs/java/client/model/enums/ExchangeStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/listener/ExchangeRequestListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/mom/listener/ExchangeRequestListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/producer/ExchangeResponseProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/mom/producer/ExchangeResponseProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/service/AccountServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/service/AccountServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/current_rate_api/model/ApiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/current_rate_api/model/ApiResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/current_rate_api/service/CurrentRateApiCaller.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/current_rate_api/CurrentRateApiCallerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/ExchangeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/ExchangeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/producer/ExchangeRequestProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/mom/producer/ExchangeRequestProducer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/web/ExchangeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/web/ExchangeController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,9 +34,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="AnnotationType" />
-        <option value="JUnit5 Test Class" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -93,13 +94,29 @@
     "JUnit.AccountControllerTest.testUpdateAccount_ShouldReturnNotFound_WhenAccountDoesNotExist.executor": "Run",
     "JUnit.AccountControllerTest.testUpdateAccount_ShouldUpdateAccount_WhenGivenValidData.executor": "Run",
     "JUnit.AccountServiceTest.executor": "Run",
+    "JUnit.AccountServiceTest.processExchangeRequest_ShouldThrowAccountNotFoundException_WhenAccountDoesNotExist.executor": "Run",
+    "JUnit.AccountServiceTest.processExchangeRequest_ShouldUpdateBalancesAndSendSuccessResponse.executor": "Run",
     "JUnit.AccountServiceTest.testGenerateRandomAccountNumber_ShouldGenerate26DigitNumber.executor": "Run",
     "JUnit.AccountServiceTest.testGenerateUniqueAccountNumber_ShouldRetryUntilUniqueNumberIsGenerated.executor": "Run",
     "JUnit.AccountServiceTest.testGetAccount_ShouldReturnAccountDto_WhenAccountExists.executor": "Run",
     "JUnit.AccountServiceTest.testGetAccounts_ShouldReturnPagedAccounts.executor": "Run",
     "JUnit.AccountServiceTest.testIsAccountNumberUnique_ShouldHandleNullAccountNumber.executor": "Run",
     "JUnit.AccountServiceTest.testUpdateAccount_ShouldThrowCurrentPeselNotMatchingException_WhenPeselDoesNotMatch.executor": "Run",
+    "JUnit.AccountTest.executor": "Run",
     "JUnit.All in account-service.executor": "Run",
+    "JUnit.CurrentRateApiCallerServiceTest.executor": "Run",
+    "JUnit.CurrentRateApiCallerServiceTest.testGetCurrentRate_ShouldReturnRate_WhenApiCallIsSuccessful.executor": "Run",
+    "JUnit.CurrentRateApiCallerTest.executor": "Run",
+    "JUnit.CurrentRateApiCallerTest.testGetCurrentRate_ShouldReturnRate_WhenApiCallIsSuccessful.executor": "Run",
+    "JUnit.ExchangeControllerTest.executor": "Run",
+    "JUnit.ExchangeControllerTest.testGetCurrentRate_ShouldReturnNotFound_WhenCurrencyIsInvalid.executor": "Run",
+    "JUnit.ExchangeControllerTest.testProcessExchangeRequestCommand_ShouldProcessRequest_WhenGivenValidData.executor": "Run",
+    "JUnit.ExchangeRequestProducerTest.executor": "Run",
+    "JUnit.ExchangeRequestProducerTest.testPostExchangeRequestDtoToQueue_ShouldSetStatusApproved_WhenSendIsSuccessful.executor": "Run",
+    "JUnit.ExchangeResponseListenerTest.executor": "Run",
+    "JUnit.ExchangeResponseProducerTest.executor": "Run",
+    "JUnit.ExchangeResponseProducerTest.postExchangeResponseDtoToQueue_ShouldPostMessage.executor": "Run",
+    "JUnit.ExchangeServiceTest.executor": "Run",
     "JUnit.MockTest.countQueries.executor": "Run",
     "JUnit.MockTest.countQueries2.executor": "Run",
     "JUnit.MockTest.countQueriesCreateAccount.executor": "Run",
@@ -164,8 +181,11 @@
       <recent name="C:\Users\tende\IdeaProjects\banking-app\currency-exchange-service\src\main\resources\changes" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
-      <recent name="pl.kurs.java.account.controller" />
-      <recent name="pl.kurs.java.account.service" />
+      <recent name="pl.kurs.java.exchange.web" />
+      <recent name="pl.kurs.java.exchange.service" />
+      <recent name="pl.kurs.java.exchange.service.mom.listener" />
+      <recent name="pl.kurs.java.exchange.service.mom.producer" />
+      <recent name="pl.kurs.java.exchange.service.current_rate_api" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -177,69 +197,66 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.account-service-8888">
-    <configuration name="AccountControllerTest.testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="account-service" />
+  <component name="RunManager" selected="JUnit.java in exchange-service">
+    <configuration name="ExchangeControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="exchange-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.kurs.java.account.web.*" />
+          <option name="PATTERN" value="pl.kurs.java.exchange.web.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.kurs.java.account.controller" />
-      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.web.AccountControllerTest" />
-      <option name="METHOD_NAME" value="testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel" />
+      <option name="PACKAGE_NAME" value="pl.kurs.java.exchange.web" />
+      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.exchange.web.ExchangeControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExchangeControllerTest.testGetCurrentRate_ShouldReturnNotFound_WhenCurrencyIsInvalid" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="exchange-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.kurs.java.exchange.web.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.kurs.java.exchange.web" />
+      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.exchange.web.ExchangeControllerTest" />
+      <option name="METHOD_NAME" value="testGetCurrentRate_ShouldReturnNotFound_WhenCurrencyIsInvalid" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AccountControllerTest.testDeleteAccount_ShouldReturnNotFound_WhenAccountDoesNotExist" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="account-service" />
+    <configuration name="ExchangeControllerTest.testProcessExchangeRequestCommand_ShouldProcessRequest_WhenGivenValidData" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="exchange-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.kurs.java.account.web.*" />
+          <option name="PATTERN" value="pl.kurs.java.exchange.web.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.kurs.java.account.controller" />
-      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.web.AccountControllerTest" />
-      <option name="METHOD_NAME" value="testDeleteAccount_ShouldReturnNotFound_WhenAccountDoesNotExist" />
+      <option name="PACKAGE_NAME" value="pl.kurs.java.exchange.web" />
+      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.exchange.web.ExchangeControllerTest" />
+      <option name="METHOD_NAME" value="testProcessExchangeRequestCommand_ShouldProcessRequest_WhenGivenValidData" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AccountControllerTest.testUpdateAccount_ShouldNotUpdateAccount_WhenNameContainsNonLetterCharacters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="java in account-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.kurs.java.account.web.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.kurs.java.account.controller" />
-      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.web.AccountControllerTest" />
-      <option name="METHOD_NAME" value="testUpdateAccount_ShouldNotUpdateAccount_WhenNameContainsNonLetterCharacters" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="All in account-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="account-service" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="account in account-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="account-service" />
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account" />
+      <dir value="$PROJECT_DIR$/account-service/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in exchange-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="exchange-service" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/exchange-service/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -281,11 +298,11 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.All in account-service" />
-      <item itemvalue="JUnit.AccountControllerTest.testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel" />
-      <item itemvalue="JUnit.AccountControllerTest.testDeleteAccount_ShouldReturnNotFound_WhenAccountDoesNotExist" />
-      <item itemvalue="JUnit.AccountControllerTest.testUpdateAccount_ShouldNotUpdateAccount_WhenNameContainsNonLetterCharacters" />
-      <item itemvalue="JUnit.account in account-service" />
+      <item itemvalue="JUnit.ExchangeControllerTest" />
+      <item itemvalue="JUnit.ExchangeControllerTest.testGetCurrentRate_ShouldReturnNotFound_WhenCurrencyIsInvalid" />
+      <item itemvalue="JUnit.ExchangeControllerTest.testProcessExchangeRequestCommand_ShouldProcessRequest_WhenGivenValidData" />
+      <item itemvalue="JUnit.java in account-service" />
+      <item itemvalue="JUnit.java in exchange-service" />
       <item itemvalue="Spring Boot.exchange-service-8900" />
       <item itemvalue="Spring Boot.account-service-8888" />
       <item itemvalue="Spring Boot.api-gateway-8070" />
@@ -293,11 +310,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in account-service" />
-        <item itemvalue="JUnit.account in account-service" />
-        <item itemvalue="JUnit.AccountControllerTest.testDeleteAccount_ShouldReturnNotFound_WhenAccountDoesNotExist" />
-        <item itemvalue="JUnit.AccountControllerTest.testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel" />
-        <item itemvalue="JUnit.AccountControllerTest.testUpdateAccount_ShouldNotUpdateAccount_WhenNameContainsNonLetterCharacters" />
+        <item itemvalue="JUnit.java in exchange-service" />
+        <item itemvalue="JUnit.java in account-service" />
+        <item itemvalue="JUnit.ExchangeControllerTest.testProcessExchangeRequestCommand_ShouldProcessRequest_WhenGivenValidData" />
+        <item itemvalue="JUnit.ExchangeControllerTest" />
+        <item itemvalue="JUnit.ExchangeControllerTest.testGetCurrentRate_ShouldReturnNotFound_WhenCurrencyIsInvalid" />
       </list>
     </recent_temporary>
   </component>
@@ -328,7 +345,7 @@
       <workItem from="1720426273673" duration="3467000" />
       <workItem from="1720431444588" duration="26223000" />
       <workItem from="1720881660550" duration="10300000" />
-      <workItem from="1720950454658" duration="17583000" />
+      <workItem from="1720950454658" duration="22180000" />
     </task>
     <task id="LOCAL-00001" summary="working on account crud tests (still some testing to do)">
       <option name="closed" value="true" />
@@ -346,7 +363,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720958632549</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="work in progress">
+      <option name="closed" value="true" />
+      <created>1720993505669</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1720993505669</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -369,29 +394,5 @@
     <MESSAGE value="working on account crud tests (still some testing to do)" />
     <MESSAGE value="work in progress" />
     <option name="LAST_COMMIT_MESSAGE" value="work in progress" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java</url>
-          <line>82</line>
-          <properties class="pl.kurs.java.account.service.AccountService" method="processExchangeRequest">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/exchange-service/src/main/java/pl/kurs/java/exchange/service/mom/producer/ExchangeRequestProducer.java</url>
-          <line>21</line>
-          <properties class="pl.kurs.java.exchange.service.mom.producer.ExchangeRequestProducer" method="postExchangeRequestDtoToQueue">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package pl.kurs.java.account.service.producer;
+package pl.kurs.java.account.service.mom.producer;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

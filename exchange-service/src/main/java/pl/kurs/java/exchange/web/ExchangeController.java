@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.kurs.java.exchange.current_rate_api.service.CurrentRateApiCaller;
+import pl.kurs.java.exchange.service.current_rate_api.CurrentRateApiCallerService;
 import pl.kurs.java.exchange.model.ExchangeRequest;
 import pl.kurs.java.exchange.model.command.CreateExchangeRequestCommand;
 import pl.kurs.java.exchange.service.ExchangeService;
@@ -21,7 +21,7 @@ import pl.kurs.java.exchange.service.ExchangeService;
 public class ExchangeController {
 
     private final ExchangeService exchangeService;
-    private final CurrentRateApiCaller currentRateApiCaller;
+    private final CurrentRateApiCallerService currentRateApiCallerService;
 
     @PostMapping("/{pesel}")
     public ResponseEntity<ExchangeRequest> processExchangeRequestCommand(@PathVariable String pesel, @RequestBody CreateExchangeRequestCommand createExchangeRequestCommand) {
@@ -30,8 +30,8 @@ public class ExchangeController {
     }
 
     @GetMapping("/{currency}")
-    public void getCurrentRate(@PathVariable String currency) {
+    public ResponseEntity<Double> getCurrentRate(@PathVariable String currency) {
         log.info("Getting current rate for: {}", currency);
-        currentRateApiCaller.getCurrentRate(currency);
+        return ResponseEntity.ok().body(currentRateApiCallerService.getCurrentRate(currency));
     }
 }

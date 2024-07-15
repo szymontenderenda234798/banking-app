@@ -18,6 +18,9 @@ import pl.kurs.java.account.model.command.UpdateAccountCommand;
 import pl.kurs.java.account.model.dto.AccountDto;
 import pl.kurs.java.account.repository.AccountRepository;
 import pl.kurs.java.account.model.command.CreateAccountCommand;
+import pl.kurs.java.account.service.mom.producer.ExchangeResponseProducer;
+import pl.kurs.java.client.model.ExchangeRequestDto;
+import pl.kurs.java.client.model.ExchangeResponseDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +43,9 @@ class AccountServiceTest {
 
     @Mock
     private AccountRepository accountRepository;
+
+    @Mock
+    private ExchangeResponseProducer exchangeResponseProducer;
 
     @InjectMocks
     private AccountService accountService;
@@ -285,5 +291,34 @@ class AccountServiceTest {
 
         verify(accountRepository, times(1)).findByPesel(pesel);
         verify(accountRepository, never()).delete(any(Account.class));
+    }
+
+    @Test
+    void processExchangeRequest_ShouldUpdateBalancesAndSendSuccessResponse() {
+        // given
+        String pesel = "12345678901";
+        Account account = new Account(pesel, "John", "Doe", "12345678901234567890123456", 1000.0, 0);
+        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.of(account));
+
+        ExchangeRequestDto exchangeRequestDto = new ExchangeRequestDto(1L, pesel, "PLN", "USD", 100.0, 25.0, 0.25);
+
+        // when
+        accountService.processExchangeRequest(exchangeRequestDto);
+
+        // then
+        verify(accountRepository, times(1)).save(account);
+        verify(exchangeResponseProducer, times(1)).postExchangeResponseDtoToQueue(any(ExchangeResponseDto.class));
+    }
+
+    @Test
+    void processExchangeRequest_ShouldThrowAccountNotFoundException_WhenAccountDoesNotExist() {
+        // given
+        String pesel = "nonexistentPesel";
+        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.empty());
+
+        ExchangeRequestDto exchangeRequestDto = new ExchangeRequestDto(1L, pesel, "PLN", "USD", 100.0, 25.0, 0.25);
+
+        // when & then
+        assertThrows(AccountNotFoundException.class, () -> accountService.processExchangeRequest(exchangeRequestDto));
     }
 }

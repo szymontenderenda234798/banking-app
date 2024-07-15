@@ -14,7 +14,7 @@ import pl.kurs.java.account.model.command.UpdateAccountCommand;
 import pl.kurs.java.account.model.dto.AccountDto;
 import org.springframework.stereotype.Service;
 import pl.kurs.java.account.repository.AccountRepository;
-import pl.kurs.java.account.service.producer.ExchangeResponseProducer;
+import pl.kurs.java.account.service.mom.producer.ExchangeResponseProducer;
 import pl.kurs.java.client.model.ExchangeRequestDto;
 import pl.kurs.java.client.model.ExchangeResponseDto;
 import pl.kurs.java.client.model.enums.ExchangeStatus;

@@ -1,4 +1,4 @@
-package pl.kurs.java.account.service.listener;
+package pl.kurs.java.account.service.mom.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

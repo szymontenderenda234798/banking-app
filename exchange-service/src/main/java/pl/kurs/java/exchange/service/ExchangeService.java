@@ -9,7 +9,7 @@ import pl.kurs.java.exchange.exception.PeselMismatchException;
 import pl.kurs.java.exchange.model.ExchangeRequest;
 import pl.kurs.java.client.model.enums.ExchangeStatus;
 import pl.kurs.java.exchange.model.command.CreateExchangeRequestCommand;
-import pl.kurs.java.exchange.current_rate_api.service.CurrentRateApiCaller;
+import pl.kurs.java.exchange.service.current_rate_api.CurrentRateApiCallerService;
 import pl.kurs.java.exchange.repository.ExchangeRepository;
 import pl.kurs.java.exchange.service.mom.producer.ExchangeRequestProducer;
 import pl.kurs.java.exchange.service.provider.DateProvider;
@@ -22,7 +22,7 @@ public class ExchangeService {
     private final ExchangeRequestProducer exchangeRequestProducer;
     private final ExchangeRepository exchangeRepository;
     private final DateProvider dateProvider;
-    private final CurrentRateApiCaller currentRateApiCaller;
+    private final CurrentRateApiCallerService currentRateApiCallerService;
 
     @Transactional
     public ExchangeRequest processExchangeRequestCommand(String pesel, CreateExchangeRequestCommand createExchangeRequestCommand) {
@@ -40,19 +40,19 @@ public class ExchangeService {
         exchangeRepository.save(exchangeRequest);
     }
 
-    private ExchangeRequest createExchangeRequest(CreateExchangeRequestCommand createExchangeRequestCommand) {
+    ExchangeRequest createExchangeRequest(CreateExchangeRequestCommand createExchangeRequestCommand) {
         return exchangeRepository.save(createExchangeRequestFromCommand(createExchangeRequestCommand));
     }
 
-    private double getCurrentExchangeRate(String currencyFrom, String currencyTo) {
+    double getCurrentExchangeRate(String currencyFrom, String currencyTo) {
         if (currencyFrom.equals("PLN")) {
-            return 1 / currentRateApiCaller.getCurrentRate(currencyTo);
+            return 1 / currentRateApiCallerService.getCurrentRate(currencyTo);
         } else {
-            return currentRateApiCaller.getCurrentRate(currencyFrom);
+            return currentRateApiCallerService.getCurrentRate(currencyFrom);
         }
     }
 
-    private ExchangeRequest createExchangeRequestFromCommand(CreateExchangeRequestCommand createExchangeRequestCommand) {
+    ExchangeRequest createExchangeRequestFromCommand(CreateExchangeRequestCommand createExchangeRequestCommand) {
         double rate = getCurrentExchangeRate(createExchangeRequestCommand.currencyFrom(), createExchangeRequestCommand.currencyTo());
         return new ExchangeRequest(
                 createExchangeRequestCommand.pesel(),

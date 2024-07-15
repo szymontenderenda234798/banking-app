@@ -23,17 +23,23 @@ public class Account {
     private double usdBalance;
 
     public boolean exchange(String currencyFrom, String currencyTo, double amountFrom, double amountTo) {
-        if (currencyFrom.equals("PLN") && plnBalance < amountFrom || currencyFrom.equals("USD") && usdBalance < amountFrom){
+        if (!(currencyFrom.equals("PLN") && currencyTo.equals("USD")) &&
+                !(currencyFrom.equals("USD") && currencyTo.equals("PLN"))) {
             return false;
-        } else {
-            if (currencyFrom.equals("PLN")) {
-                plnBalance -= amountFrom;
-                usdBalance += amountTo;
-            } else {
-                plnBalance += amountTo;
-                usdBalance -= amountFrom;
-            }
-            return true;
         }
+
+        if ((currencyFrom.equals("PLN") && plnBalance < amountFrom) ||
+                (currencyFrom.equals("USD") && usdBalance < amountFrom)) {
+            return false;
+        }
+
+        if (currencyFrom.equals("PLN")) {
+            plnBalance -= amountFrom;
+            usdBalance += amountTo;
+        } else {
+            plnBalance += amountTo;
+            usdBalance -= amountFrom;
+        }
+        return true;
     }
 }
