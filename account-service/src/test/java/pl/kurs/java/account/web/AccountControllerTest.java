@@ -17,7 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import pl.kurs.java.account.Main;
+import pl.kurs.java.Main;
 import pl.kurs.java.account.exception.AccountWithGivenPeselAlreadyExistsException;
 import pl.kurs.java.account.exception.CurrentPeselNotMatchingException;
 import pl.kurs.java.account.model.Account;

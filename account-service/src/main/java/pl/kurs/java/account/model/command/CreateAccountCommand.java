@@ -6,6 +6,8 @@ import lombok.NonNull;
 import pl.kurs.java.account.validate.annotation.IsAdult;
 import pl.kurs.java.account.validate.annotation.ValidPesel;
 
+import java.math.BigDecimal;
+
 public record CreateAccountCommand(
         @ValidPesel @IsAdult @NonNull
         String pesel,
@@ -17,5 +19,5 @@ public record CreateAccountCommand(
         String surname,
 
         @PositiveOrZero(message = "INVALID_BALANCE_NEGATIVE_VALUE")
-        double plnBalance) {
+        BigDecimal startingBalance) {
 }

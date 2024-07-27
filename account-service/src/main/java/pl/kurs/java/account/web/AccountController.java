@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import pl.kurs.java.account.model.command.CreateAccountCommand;
 import pl.kurs.java.account.model.command.UpdateAccountCommand;
-import pl.kurs.java.account.model.dto.AccountDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.kurs.java.account.model.dto.AccountDto;
 import pl.kurs.java.account.service.AccountService;
 
 @RestController
@@ -41,11 +41,11 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getAccount(pesel));
     }
 
-    @PostMapping
-    public ResponseEntity<AccountDto> createAccount(@Valid @RequestBody CreateAccountCommand createAccountCommand) {
-        log.info("Adding account for: {} {}", createAccountCommand.name(), createAccountCommand.surname());
-        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(createAccountCommand));
-    }
+//    @PostMapping
+//    public ResponseEntity<AccountDto> createAccount(@Valid @RequestBody CreateAccountCommand createAccountCommand) {
+//        log.info("Adding account for: {} {}", createAccountCommand.name(), createAccountCommand.surname());
+//        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(createAccountCommand));
+//    }
 
     @PutMapping("/{pesel}")
     public ResponseEntity<AccountDto> updateAccount(@PathVariable String pesel, @RequestBody @Valid UpdateAccountCommand updateAccountCommand) {
