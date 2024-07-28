@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.kurs.java.exchange.service.ExchangeRateService;
 
 @RestController
-@RequestMapping("api/v1/rates")
+@RequestMapping("api/v1/rate")
 @RequiredArgsConstructor
 @Slf4j
 public class ExchangeRateController {

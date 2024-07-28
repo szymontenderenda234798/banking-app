@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Entity
+@Entity(name = "sub_accounts")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,7 +22,6 @@ public class SubAccount {
     private String currency;
     private String accountNumber;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
     @JoinColumn(name = "pesel")
     Account parentAccount;
 

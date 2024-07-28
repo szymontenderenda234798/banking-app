@@ -1,9 +1,10 @@
-package pl.kurs.java.account.model.command;
+package pl.kurs.java.account.model.command.account;
 
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.NonNull;
 import pl.kurs.java.account.validate.annotation.IsAdult;
+import pl.kurs.java.account.validate.annotation.SupportedBaseCurrency;
 import pl.kurs.java.account.validate.annotation.ValidPesel;
 
 import java.math.BigDecimal;
@@ -19,5 +20,8 @@ public record CreateAccountCommand(
         String surname,
 
         @PositiveOrZero(message = "INVALID_BALANCE_NEGATIVE_VALUE")
-        BigDecimal startingBalance) {
+        BigDecimal startingBalance,
+
+        @NonNull @SupportedBaseCurrency
+        String currency) {
 }

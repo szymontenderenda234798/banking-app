@@ -11,11 +11,13 @@ import pl.kurs.java.account.exception.AccountWithGivenPeselAlreadyExistsExceptio
 import pl.kurs.java.account.exception.CurrentPeselNotMatchingException;
 import pl.kurs.java.account.model.Account;
 import pl.kurs.java.account.model.SubAccount;
-import pl.kurs.java.account.model.command.CreateAccountCommand;
-import pl.kurs.java.account.model.command.UpdateAccountCommand;
+import pl.kurs.java.account.model.command.account.CreateAccountCommand;
+import pl.kurs.java.account.model.command.account.UpdateAccountCommand;
 import org.springframework.stereotype.Service;
+import pl.kurs.java.account.model.command.subaccount.CreateSubAccountCommand;
 import pl.kurs.java.account.model.dto.AccountDto;
 import pl.kurs.java.account.repository.AccountRepository;
+import pl.kurs.java.account.repository.SubAccountRepository;
 import pl.kurs.java.exchange.config.SupportedCurrenciesConfig;
 
 
@@ -28,14 +30,16 @@ import java.security.SecureRandom;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final SubAccountRepository subAccountRepository;
     private final SupportedCurrenciesConfig supportedCurrenciesConfig;
 
     @PostConstruct
     public void init() {
         System.out.println("Supported currencies: " + supportedCurrenciesConfig.getBaseCurrency() + " " + supportedCurrenciesConfig.getForeignCurrencies());
-        Account a1 = new Account("12345678901", "Jan", "Kowalski", BigDecimal.valueOf(1000), "12345678901234567890123456", "PLN");
-        Account a2 = new Account("12332112345", "Anna", "Nowak", BigDecimal.valueOf(2000), "12345678901234567890123457", "PLN");
-        SubAccount sa1 = new SubAccount(BigDecimal.valueOf(1000), "PLN", "12345678901234567890123456");
+        Account a1 = new Account("12345678901", "Jan", "Kowalski", BigDecimal.valueOf(1000), "PLN", "12345678901234567890123456");
+        Account a2 = new Account("12332112345", "Anna", "Nowak", BigDecimal.valueOf(2000), "PLN", "12345678901234567890123457");
+        SubAccount sa1 = new SubAccount(BigDecimal.valueOf(0), "USD", "12345678901234567890123456");
+        subAccountRepository.save(sa1);
         a1.addSubAccount(sa1);
         accountRepository.save(a1);
         accountRepository.save(a2);
@@ -69,19 +73,20 @@ public class AccountService {
         return AccountDto.fromAccount(updatedAccount);
     }
 
-//    @Transactional
-//    public AccountDto createAccount(CreateAccountCommand createAccountCommand) {
-//        if (accountRepository.findByPesel(createAccountCommand.pesel()).isPresent()) {
-//            throw new AccountWithGivenPeselAlreadyExistsException();
-//        }
-//        Account account = accountRepository.save(new Account(
-//                createAccountCommand.pesel(),
-//                createAccountCommand.name(),
-//                createAccountCommand.surname(),
-//                generateUniqueAccountNumber(),
-//                createAccountCommand.startingBalance()));
-//        return AccountDto.fromAccount(account);
-//    }
+    @Transactional
+    public AccountDto createAccount(CreateAccountCommand createAccountCommand) {
+        if (accountRepository.findByPesel(createAccountCommand.pesel()).isPresent()) {
+            throw new AccountWithGivenPeselAlreadyExistsException();
+        }
+        Account account = accountRepository.save(new Account(
+                createAccountCommand.pesel(),
+                createAccountCommand.name(),
+                createAccountCommand.surname(),
+                createAccountCommand.startingBalance(),
+                createAccountCommand.currency(),
+                generateUniqueAccountNumber()));
+        return AccountDto.fromAccount(account);
+    }
 
     @Transactional
     public void deleteAccount(String pesel) {
@@ -115,5 +120,18 @@ public class AccountService {
 
     boolean isAccountNumberUnique(String accountNumber) {
         return accountRepository.findByAccountNumber(accountNumber).isEmpty();
+    }
+
+    public AccountDto createSubAccount(String pesel, CreateSubAccountCommand createSubAccountCommand) {
+        Account account = accountRepository.findByPesel(pesel)
+                .orElseThrow(() -> new AccountNotFoundException(pesel));
+        SubAccount subAccount = new SubAccount(BigDecimal.ZERO, createSubAccountCommand.currency(), generateUniqueAccountNumber());
+        account.addSubAccount(subAccount);
+        accountRepository.save(account);
+        return AccountDto.fromAccount(account);
+    }
+
+    public void deleteSubAccount(String pesel, String currency) {
+
     }
 }

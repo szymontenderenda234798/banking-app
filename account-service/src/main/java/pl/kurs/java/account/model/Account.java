@@ -29,7 +29,6 @@ public class Account {
     private String accountNumber;
 
     @OneToMany(mappedBy = "parentAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
     private Set<SubAccount> subAccounts = new HashSet<>();
 
     public Account(String pesel, String name, String surname, BigDecimal balance, String currency, String accountNumber) {
@@ -42,6 +41,7 @@ public class Account {
     }
 
     public boolean addSubAccount(SubAccount subAccount) {
+        subAccount.setParentAccount(this);
         return subAccounts.add(subAccount);
     }
 }

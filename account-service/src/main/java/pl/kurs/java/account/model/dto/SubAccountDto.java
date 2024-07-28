@@ -5,8 +5,8 @@ import pl.kurs.java.account.model.SubAccount;
 
 import java.math.BigDecimal;
 
-public record SubAccountDto(String accountNumber, String currency, BigDecimal balance) {
+public record SubAccountDto(BigDecimal balance, String currency, String accountNumber) {
     public static SubAccountDto fromSubAccount(SubAccount subAccount) {
-        return new SubAccountDto(subAccount.getAccountNumber(), subAccount.getCurrency(), subAccount.getBalance());
+        return new SubAccountDto(subAccount.getBalance(), subAccount.getCurrency(), subAccount.getAccountNumber());
     }
 }

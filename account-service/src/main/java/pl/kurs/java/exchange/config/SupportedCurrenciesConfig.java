@@ -19,4 +19,12 @@ public class SupportedCurrenciesConfig {
     public List<String> getForeignCurrencies() {
         return supportedCurrenciesProperties.getForeignCurrencies();
     }
+
+    public boolean isBaseCurrencySupported(String currency) {
+        return supportedCurrenciesProperties.getBaseCurrency().stream().map(String::toLowerCase).toList().contains(currency.toLowerCase());
+    }
+
+    public boolean isForeignCurrencySupported(String currency) {
+        return supportedCurrenciesProperties.getForeignCurrencies().stream().map(String::toLowerCase).toList().contains(currency.toLowerCase());
+    }
 }

@@ -1,9 +1,7 @@
-package pl.kurs.java.account.model.command;
+package pl.kurs.java.account.model.command.account;
 
 import jakarta.validation.constraints.Pattern;
 import lombok.NonNull;
-import pl.kurs.java.account.validate.annotation.IsAdult;
-import pl.kurs.java.account.validate.annotation.ValidPesel;
 
 public record UpdateAccountCommand(
         @NonNull
