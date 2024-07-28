@@ -1,6 +1,5 @@
-package pl.kurs.java.account.model;
+package pl.kurs.java.account.model.account;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,4 +29,6 @@ public class SubAccount {
         this.currency = currency;
         this.accountNumber = accountNumber;
     }
+
+
 }

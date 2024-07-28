@@ -13,9 +13,9 @@
 //import org.springframework.data.domain.Pageable;
 //import pl.kurs.java.account.exception.AccountNotFoundException;
 //import pl.kurs.java.account.exception.CurrentPeselNotMatchingException;
-//import pl.kurs.java.account.model.Account;
+//import pl.kurs.java.account.model.account.Account;
 //import pl.kurs.java.account.model.command.account.UpdateAccountCommand;
-//import pl.kurs.java.account.model.dto.AccountDto;
+//import pl.kurs.java.account.model.account.dto.AccountDto;
 //import pl.kurs.java.account.repository.AccountRepository;
 //import pl.kurs.java.account.model.command.account.CreateAccountCommand;
 //import pl.kurs.java.account.service.mom.producer.ExchangeResponseProducer;

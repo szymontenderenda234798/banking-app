@@ -1,7 +1,6 @@
-package pl.kurs.java.account.model.dto;
+package pl.kurs.java.account.model.account.dto;
 
-import lombok.Value;
-import pl.kurs.java.account.model.SubAccount;
+import pl.kurs.java.account.model.account.SubAccount;
 
 import java.math.BigDecimal;
 

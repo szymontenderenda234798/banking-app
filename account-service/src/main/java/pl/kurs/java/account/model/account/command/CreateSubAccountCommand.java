@@ -1,4 +1,4 @@
-package pl.kurs.java.account.model.command.subaccount;
+package pl.kurs.java.account.model.account.command;
 
 import pl.kurs.java.account.validate.annotation.SupportedForeignCurrency;
 

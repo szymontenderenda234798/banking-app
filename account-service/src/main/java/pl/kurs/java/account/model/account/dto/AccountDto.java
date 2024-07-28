@@ -1,6 +1,6 @@
-package pl.kurs.java.account.model.dto;
+package pl.kurs.java.account.model.account.dto;
 
-import pl.kurs.java.account.model.Account;
+import pl.kurs.java.account.model.account.Account;
 
 import java.math.BigDecimal;
 import java.util.List;

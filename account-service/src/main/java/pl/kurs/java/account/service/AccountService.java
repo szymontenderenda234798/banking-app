@@ -8,17 +8,25 @@ import org.springframework.data.domain.Pageable;
 import pl.kurs.java.account.exception.AccountNotFoundException;
 import lombok.RequiredArgsConstructor;
 import pl.kurs.java.account.exception.AccountWithGivenPeselAlreadyExistsException;
-import pl.kurs.java.account.exception.CurrentPeselNotMatchingException;
-import pl.kurs.java.account.model.Account;
-import pl.kurs.java.account.model.SubAccount;
-import pl.kurs.java.account.model.command.account.CreateAccountCommand;
-import pl.kurs.java.account.model.command.account.UpdateAccountCommand;
+import pl.kurs.java.account.exception.NoSubAccountInGivenCurrencyException;
+import pl.kurs.java.account.exception.PeselFromPathVariableAndRequestBodyNotMatchingException;
+import pl.kurs.java.account.model.account.Account;
+import pl.kurs.java.account.model.account.SubAccount;
+import pl.kurs.java.account.model.account.command.CreateAccountCommand;
+import pl.kurs.java.account.model.account.command.UpdateAccountCommand;
 import org.springframework.stereotype.Service;
-import pl.kurs.java.account.model.command.subaccount.CreateSubAccountCommand;
-import pl.kurs.java.account.model.dto.AccountDto;
+import pl.kurs.java.account.model.account.command.CreateSubAccountCommand;
+import pl.kurs.java.account.model.transaction.command.BuyForeignCurrencyCommand;
+import pl.kurs.java.account.model.account.dto.AccountDto;
+import pl.kurs.java.account.model.transaction.command.SellForeignCurrencyCommand;
+import pl.kurs.java.account.model.transaction.dto.TransactionResultDto;
+import pl.kurs.java.account.model.transaction.enums.TransactionStatus;
+import pl.kurs.java.account.model.transaction.request.BuyTransactionRequest;
+import pl.kurs.java.account.model.transaction.request.SellTransactionRequest;
 import pl.kurs.java.account.repository.AccountRepository;
 import pl.kurs.java.account.repository.SubAccountRepository;
 import pl.kurs.java.exchange.config.SupportedCurrenciesConfig;
+import pl.kurs.java.exchange.service.ExchangeRateService;
 
 
 import java.math.BigDecimal;
@@ -32,6 +40,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final SubAccountRepository subAccountRepository;
     private final SupportedCurrenciesConfig supportedCurrenciesConfig;
+    private final ExchangeRateService exchangeRateService;
 
     @PostConstruct
     public void init() {
@@ -63,7 +72,7 @@ public class AccountService {
     @Transactional
     public AccountDto updateAccount(String currentPesel, UpdateAccountCommand updateAccountCommand) {
         if (!currentPesel.equals(updateAccountCommand.currentPesel())) {
-            throw new CurrentPeselNotMatchingException(currentPesel, updateAccountCommand.currentPesel());
+            throw new PeselFromPathVariableAndRequestBodyNotMatchingException(currentPesel, updateAccountCommand.currentPesel());
         }
         Account account = accountRepository.findByPesel(currentPesel)
                 .orElseThrow(() -> new AccountNotFoundException(currentPesel));
@@ -122,6 +131,7 @@ public class AccountService {
         return accountRepository.findByAccountNumber(accountNumber).isEmpty();
     }
 
+    @Transactional
     public AccountDto createSubAccount(String pesel, CreateSubAccountCommand createSubAccountCommand) {
         Account account = accountRepository.findByPesel(pesel)
                 .orElseThrow(() -> new AccountNotFoundException(pesel));
@@ -131,7 +141,65 @@ public class AccountService {
         return AccountDto.fromAccount(account);
     }
 
+    @Transactional
     public void deleteSubAccount(String pesel, String currency) {
+        Account account = accountRepository.findByPesel(pesel)
+                .orElseThrow(() -> new AccountNotFoundException(pesel));
+        account.getSubAccounts().removeIf(subAccount -> subAccount.getCurrency().equals(currency));
+        accountRepository.save(account);
+    }
 
+    @Transactional
+    public BuyTransactionRequest buyForeignCurrency(String pesel, BuyForeignCurrencyCommand buyForeignCurrencyCommand) {
+        if (!pesel.equals(buyForeignCurrencyCommand.pesel())) {
+            throw new PeselFromPathVariableAndRequestBodyNotMatchingException(pesel, buyForeignCurrencyCommand.pesel());
+        }
+        Account account = accountRepository.findByPesel(pesel)
+                .orElseThrow(() -> new AccountNotFoundException(pesel));
+        if (!account.hasAccountInGivenCurrency(buyForeignCurrencyCommand.currency())) {
+            throw new NoSubAccountInGivenCurrencyException();
+        }
+
+        double exchangeRate = exchangeRateService.getExchangeRate(buyForeignCurrencyCommand.currency());
+        BigDecimal amountToSpend = buyForeignCurrencyCommand.amountToBuy().multiply(BigDecimal.valueOf(exchangeRate)).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+        BuyTransactionRequest buyTransactionRequest = new BuyTransactionRequest(
+                pesel,
+                buyForeignCurrencyCommand.currency(),
+                buyForeignCurrencyCommand.amountToBuy(),
+                BigDecimal.valueOf(exchangeRate),
+                account.getCurrency(),
+                amountToSpend,
+                TransactionStatus.CREATED
+        );
+
+        return account.buyForeignCurrency(buyTransactionRequest);
+    }
+
+    @Transactional
+    public SellTransactionRequest sellForeignCurrency(String pesel, SellForeignCurrencyCommand sellForeignCurrencyCommand) {
+        if (!pesel.equals(sellForeignCurrencyCommand.pesel())) {
+            throw new PeselFromPathVariableAndRequestBodyNotMatchingException(pesel, sellForeignCurrencyCommand.pesel());
+        }
+        Account account = accountRepository.findByPesel(pesel)
+                .orElseThrow(() -> new AccountNotFoundException(pesel));
+        if (!account.hasAccountInGivenCurrency(sellForeignCurrencyCommand.currency())) {
+            throw new NoSubAccountInGivenCurrencyException();
+        }
+
+        double exchangeRate = exchangeRateService.getExchangeRate(sellForeignCurrencyCommand.currency());
+        BigDecimal amountToReceive = sellForeignCurrencyCommand.amountToSell().multiply(BigDecimal.valueOf(exchangeRate)).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+        SellTransactionRequest sellTransactionRequest = new SellTransactionRequest(
+                pesel,
+                sellForeignCurrencyCommand.currency(),
+                sellForeignCurrencyCommand.amountToSell(),
+                BigDecimal.valueOf(exchangeRate),
+                account.getCurrency(),
+                amountToReceive,
+                TransactionStatus.CREATED
+        );
+
+        return account.sellForeignCurrency(sellTransactionRequest);
     }
 }

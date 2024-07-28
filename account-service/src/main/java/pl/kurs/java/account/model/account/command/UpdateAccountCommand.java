@@ -1,4 +1,4 @@
-package pl.kurs.java.account.model.command.account;
+package pl.kurs.java.account.model.account.command;
 
 import jakarta.validation.constraints.Pattern;
 import lombok.NonNull;

@@ -19,12 +19,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import pl.kurs.java.Main;
 import pl.kurs.java.account.exception.AccountWithGivenPeselAlreadyExistsException;
-import pl.kurs.java.account.exception.CurrentPeselNotMatchingException;
-import pl.kurs.java.account.model.Account;
-import pl.kurs.java.account.model.SubAccount;
-import pl.kurs.java.account.model.command.account.CreateAccountCommand;
-import pl.kurs.java.account.model.command.account.UpdateAccountCommand;
-import pl.kurs.java.account.model.dto.AccountDto;
+import pl.kurs.java.account.exception.PeselFromPathVariableAndRequestBodyNotMatchingException;
+import pl.kurs.java.account.model.account.Account;
+import pl.kurs.java.account.model.account.SubAccount;
+import pl.kurs.java.account.model.account.command.CreateAccountCommand;
+import pl.kurs.java.account.model.account.command.UpdateAccountCommand;
+import pl.kurs.java.account.model.account.dto.AccountDto;
 import pl.kurs.java.account.repository.AccountRepository;
 import pl.kurs.java.account.service.AccountService;
 
@@ -307,7 +307,7 @@ class AccountControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(command)))
                 .andExpect(status().isConflict())
-                .andExpect(result -> assertInstanceOf(CurrentPeselNotMatchingException.class, result.getResolvedException()));
+                .andExpect(result -> assertInstanceOf(PeselFromPathVariableAndRequestBodyNotMatchingException.class, result.getResolvedException()));
 
         // then
         verify(accountRepository, never()).save(any(Account.class));
@@ -420,21 +420,21 @@ class AccountControllerTest {
         assertEquals(1L, executionCount);
     }
 
-//    @Test
-//    public void testCreateAccount_ShouldCountQuerries() throws Exception {
-//        //given
-//        CreateAccountCommand createAccountCommand = new CreateAccountCommand("64060431778", "John", "Doe", 1000.0);
-//
-//        //when
-//        mockMvc.perform(post("/api/v1/account")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(asJsonString(createAccountCommand)))
-//                .andExpect(status().isCreated());
-//
-//        //then
-//        long executionCount = statistics.getQueryExecutionCount();
-//        assertEquals(2L, executionCount);
-//    }
+    @Test
+    public void testCreateAccount_ShouldCountQuerries() throws Exception {
+        //given
+        CreateAccountCommand createAccountCommand = new CreateAccountCommand("08051129149", "John", "Doe", BigDecimal.valueOf(1000), "PLN");
+
+        //when
+        mockMvc.perform(post("/api/v1/account")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(createAccountCommand)))
+                .andExpect(status().isCreated());
+
+        //then
+        long executionCount = statistics.getQueryExecutionCount();
+        assertEquals(2L, executionCount);
+    }
 
     @Test
     public void testUpdateAccount_ShouldCountQuerries() throws Exception {
