@@ -3,7 +3,6 @@ package pl.kurs.java.account.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -12,32 +11,32 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import pl.kurs.java.account.exception.AccountNotFoundException;
-import pl.kurs.java.account.exception.CurrentPeselNotMatchingException;
-import pl.kurs.java.account.model.Account;
-import pl.kurs.java.account.model.command.UpdateAccountCommand;
-import pl.kurs.java.account.model.dto.AccountDto;
+import pl.kurs.java.account.exception.NoSubAccountInGivenCurrencyException;
+import pl.kurs.java.account.exception.PeselFromPathVariableAndRequestBodyNotMatchingException;
+import pl.kurs.java.account.model.account.Account;
+import pl.kurs.java.account.model.account.SubAccount;
+import pl.kurs.java.account.model.account.command.CreateAccountCommand;
+import pl.kurs.java.account.model.account.command.CreateSubAccountCommand;
+import pl.kurs.java.account.model.account.command.UpdateAccountCommand;
+import pl.kurs.java.account.model.account.dto.AccountDto;
+import pl.kurs.java.account.model.transaction.command.BuyForeignCurrencyCommand;
+import pl.kurs.java.account.model.transaction.command.SellForeignCurrencyCommand;
+import pl.kurs.java.account.model.transaction.enums.TransactionStatus;
+import pl.kurs.java.account.model.transaction.request.BuyTransactionRequest;
+import pl.kurs.java.account.model.transaction.request.SellTransactionRequest;
 import pl.kurs.java.account.repository.AccountRepository;
-import pl.kurs.java.account.model.command.CreateAccountCommand;
-import pl.kurs.java.account.service.mom.producer.ExchangeResponseProducer;
-import pl.kurs.java.client.model.ExchangeRequestDto;
-import pl.kurs.java.client.model.ExchangeResponseDto;
+import pl.kurs.java.account.repository.SubAccountRepository;
+import pl.kurs.java.exchange.config.SupportedCurrenciesConfig;
+import pl.kurs.java.exchange.service.ExchangeRateService;
 
-import java.util.Arrays;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.never;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 class AccountServiceTest {
 
@@ -45,280 +44,239 @@ class AccountServiceTest {
     private AccountRepository accountRepository;
 
     @Mock
-    private ExchangeResponseProducer exchangeResponseProducer;
+    private SubAccountRepository subAccountRepository;
+
+    @Mock
+    private SupportedCurrenciesConfig supportedCurrenciesConfig;
+
+    @Mock
+    private ExchangeRateService exchangeRateService;
 
     @InjectMocks
     private AccountService accountService;
 
+    private Account account;
+    private SubAccount subAccount;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        account = new Account("12345678901", "John", "Doe", BigDecimal.valueOf(1000), "PLN", "12345678901234567890123456");
+        subAccount = new SubAccount(BigDecimal.valueOf(1000), "USD", "12345678901234567890123456");
+        account.addSubAccount(subAccount);
     }
 
     @Test
-    void testGetAccount_ShouldReturnAccountDto_WhenAccountExists() {
-        // given
+    void testGetAccounts() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Account account1 = new Account("12345678901", "John", "Doe", BigDecimal.valueOf(1000), "PLN", "12345678901234567890123456");
+        Account account2 = new Account("98765432109", "Jane", "Smith", BigDecimal.valueOf(500), "PLN", "65432109876543210987654321");
+        Page<Account> accounts = new PageImpl<>(List.of(account1, account2));
+
+        when(accountRepository.findAll(pageable)).thenReturn(accounts);
+
+        Page<AccountDto> result = accountService.getAccounts(pageable);
+
+        assertEquals(2, result.getTotalElements());
+        verify(accountRepository, times(1)).findAll(pageable);
+    }
+
+    @Test
+    void testGetAccount() {
         String pesel = "12345678901";
-        Account account = new Account(pesel, "John", "Doe", "12345678901234567890123456", 1000.0, 0);
+        Account account = new Account(pesel, "John", "Doe", BigDecimal.valueOf(1000), "PLN", "12345678901234567890123456");
+
         when(accountRepository.findByPesel(pesel)).thenReturn(Optional.of(account));
 
-        // when
-        AccountDto accountDto = accountService.getAccount(pesel);
+        AccountDto result = accountService.getAccount(pesel);
 
-        // then
-        assertNotNull(accountDto);
-        assertEquals(account.getPesel(), accountDto.pesel());
-        assertEquals(account.getName(), accountDto.name());
-        assertEquals(account.getSurname(), accountDto.surname());
-        assertEquals(account.getAccountNumber(), accountDto.accountNumber());
-        assertEquals(account.getPlnBalance(), accountDto.plnBalance());
-        assertEquals(account.getUsdBalance(), accountDto.usdBalance());
+        assertEquals(pesel, result.pesel());
+        verify(accountRepository, times(1)).findByPesel(pesel);
     }
 
     @Test
-    void testGetAccount_ShouldThrowAccountNotFoundException_WhenAccountDoesNotExist() {
-        // given
-        String pesel = "12345678901";
-        when(accountRepository.findById(pesel)).thenReturn(Optional.empty());
+    void testCreateAccount() {
+        CreateAccountCommand command = new CreateAccountCommand("12345678901", "John", "Doe", BigDecimal.valueOf(1000), "PLN");
+        Account account = new Account(command.pesel(), command.name(), command.surname(), command.startingBalance(), command.currency(), "12345678901234567890123456");
 
-        // when & then
-        assertThrows(AccountNotFoundException.class, () -> accountService.getAccount(pesel));
-    }
-
-
-    @Test
-    void testCreateAccount_ShouldSaveAccountAndReturnAccountDto() {
-        // given
-        String pesel = "12345678901";
-        String name = "John";
-        String surname = "Doe";
-        String accountNumber = "12345678901234567890123456";
-        double plnBalance = 1000.0;
-        double usdBalance = 0;
-        CreateAccountCommand createAccountCommand = new CreateAccountCommand(pesel, name, surname, plnBalance);
-
-        Account account = new Account(pesel, name, surname, accountNumber, plnBalance, usdBalance);
         when(accountRepository.save(any(Account.class))).thenReturn(account);
-        when(accountRepository.findById(anyString())).thenReturn(Optional.empty()); // For unique account number check
 
-        // when
-        AccountDto accountDto = accountService.createAccount(createAccountCommand);
+        AccountDto result = accountService.createAccount(command);
 
-        // then
-        assertNotNull(accountDto);
-        assertEquals(pesel, accountDto.pesel());
-        assertEquals(name, accountDto.name());
-        assertEquals(surname, accountDto.surname());
-        assertEquals(accountNumber, accountDto.accountNumber());
-        assertEquals(plnBalance, accountDto.plnBalance());
-        assertEquals(usdBalance, accountDto.usdBalance());
-
-        ArgumentCaptor<Account> accountArgumentCaptor = ArgumentCaptor.forClass(Account.class);
-        verify(accountRepository, times(1)).save(accountArgumentCaptor.capture());
-        assertEquals(pesel, accountArgumentCaptor.getValue().getPesel());
-        assertEquals(name, accountArgumentCaptor.getValue().getName());
-        assertEquals(surname, accountArgumentCaptor.getValue().getSurname());
-        assertEquals(plnBalance, accountArgumentCaptor.getValue().getPlnBalance());
-    }
-
-
-    @Test
-    void testGenerateUniqueAccountNumber_ShouldRetryUntilUniqueNumberIsGenerated() {
-        // given
-        String nonUniqueAccountNumber1 = "12345678901234567890123456";
-        String nonUniqueAccountNumber2 = "65432109876543210987654321";
-        when(accountRepository.findById(nonUniqueAccountNumber1)).thenReturn(Optional.of(new Account()));
-        when(accountRepository.findById(nonUniqueAccountNumber2)).thenReturn(Optional.of(new Account()));
-        when(accountRepository.findById(anyString())).thenAnswer(invocation -> {
-            String argument = invocation.getArgument(0);
-            if (argument.equals(nonUniqueAccountNumber1) || argument.equals(nonUniqueAccountNumber2)) {
-                return Optional.of(new Account());
-            } else {
-                return Optional.empty();
-            }
-        });
-
-        // when
-        String accountNumber = accountService.generateUniqueAccountNumber();
-
-        // then
-        assertNotNull(accountNumber);
-        assertEquals(26, accountNumber.length());
-        assertTrue(accountNumber.matches("\\d{26}"));
-        assertNotEquals(nonUniqueAccountNumber1, accountNumber);
-        assertNotEquals(nonUniqueAccountNumber2, accountNumber);
+        assertEquals(command.pesel(), result.pesel());
+        verify(accountRepository, times(1)).save(any(Account.class));
     }
 
     @Test
-    void testGenerateRandomAccountNumber_ShouldGenerate26DigitNumber() {
-        // when
-        String accountNumber = accountService.generateRandomAccountNumber();
-
-        // then
-        assertNotNull(accountNumber, "Account number should not be null");
-        assertEquals(26, accountNumber.length(), "Account number should be 26 digits long");
-        assertTrue(accountNumber.matches("\\d{26}"), "Account number should only contain digits");
-        assertNotEquals('0', accountNumber.charAt(0), "The first digit of account number should not be zero");
-    }
-
-    @Test
-    void testIsAccountNumberUnique_ShouldReturnTrue_WhenAccountNumberIsUnique() {
-        // Given
-        String uniqueAccountNumber = "12345678901234567890123456";
-        when(accountRepository.findByAccountNumber(uniqueAccountNumber)).thenReturn(Optional.empty());
-
-        // When
-        boolean isUnique = accountService.isAccountNumberUnique(uniqueAccountNumber);
-
-        // Then
-        assertTrue(isUnique, "Account number should be unique");
-    }
-
-    @Test
-    void testIsAccountNumberUnique_ShouldReturnFalse_WhenAccountNumberIsNotUnique() {
-        // Given
-        String nonUniqueAccountNumber = "12345678901234567890123456";
-        Account existingAccount = new Account(nonUniqueAccountNumber, "John", "Doe", nonUniqueAccountNumber, 1000.0, 0);
-        when(accountRepository.findByAccountNumber(nonUniqueAccountNumber)).thenReturn(Optional.of(existingAccount));
-
-        // When
-        boolean isUnique = accountService.isAccountNumberUnique(nonUniqueAccountNumber);
-
-        // Then
-        assertFalse(isUnique, "Account number should not be unique");
-    }
-
-    @Test
-    void testGetAccounts_ShouldReturnPagedAccounts() {
-        // given
-        Pageable pageable = PageRequest.of(0, 2);
-        Account account1 = new Account("12345678901", "John", "Doe", "12345678901234567890123456", 1000.0, 0);
-        Account account2 = new Account("98765432109", "Jane", "Doe", "65432109876543210987654321", 2000.0, 0);
-        List<Account> accounts = Arrays.asList(account1, account2);
-        Page<Account> accountPage = new PageImpl<>(accounts, pageable, accounts.size());
-
-        when(accountRepository.findAll(pageable)).thenReturn(accountPage);
-
-        // when
-        Page<AccountDto> accountDtos = accountService.getAccounts(pageable);
-
-        // then
-        assertNotNull(accountDtos);
-        assertEquals(2, accountDtos.getTotalElements());
-        assertEquals(2, accountDtos.getContent().size());
-        assertEquals("12345678901", accountDtos.getContent().get(0).pesel());
-        assertEquals("98765432109", accountDtos.getContent().get(1).pesel());
-    }
-
-
-    @Test
-    void testUpdateAccount_ShouldUpdateSuccessfully_WhenPeselMatches() {
-        // given
-        String currentPesel = "12345678901";
-        UpdateAccountCommand updateCommand = new UpdateAccountCommand(currentPesel, "NewName", "NewSurname");
-        Account existingAccount = new Account(currentPesel, "OldName", "OldSurname", "accountNumber", 1000.0, 0);
-
-        when(accountRepository.findByPesel(currentPesel)).thenReturn(Optional.of(existingAccount));
-        when(accountRepository.save(any(Account.class))).thenReturn(existingAccount);
-
-        // when
-        AccountDto updatedAccountDto = accountService.updateAccount(currentPesel, updateCommand);
-
-        // then
-        assertNotNull(updatedAccountDto);
-        assertEquals(updateCommand.newName(), updatedAccountDto.name());
-        assertEquals(updateCommand.newSurname(), updatedAccountDto.surname());
-
-        verify(accountRepository, times(1)).findByPesel(currentPesel);
-        verify(accountRepository, times(1)).save(existingAccount);
-    }
-
-    @Test
-    void testUpdateAccount_ShouldThrowAccountNotFoundException_WhenAccountDoesNotExist() {
-        // given
-        String currentPesel = "12345678901";
-        UpdateAccountCommand updateCommand = new UpdateAccountCommand(currentPesel, "NewName", "NewSurname");
-
-        when(accountRepository.findByPesel(currentPesel)).thenReturn(Optional.empty());
-
-        // when & then
-        assertThrows(AccountNotFoundException.class, () -> accountService.updateAccount(currentPesel, updateCommand));
-
-        verify(accountRepository, times(1)).findByPesel(currentPesel);
-        verify(accountRepository, never()).save(any(Account.class));
-    }
-
-    @Test
-    void testUpdateAccount_ShouldThrowCurrentPeselNotMatchingException_WhenPeselDoesNotMatch() {
-        // given
-        String currentPeselFromPathVariable = "12345678901";
-        String currentPeselFromCommand = "98765432109";
-        String newPesel = "11122233344";
-        UpdateAccountCommand updateCommand = new UpdateAccountCommand(currentPeselFromCommand, "NewName", "NewSurname");
-
-        // When & Then
-        assertThrows(CurrentPeselNotMatchingException.class, () -> accountService.updateAccount(currentPeselFromPathVariable, updateCommand));
-
-        verify(accountRepository, never()).findById(anyString());
-        verify(accountRepository, never()).save(any(Account.class));
-    }
-
-    @Test
-    void testDeleteAccount_ShouldDeleteSuccessfully_WhenAccountExists() {
-        // given
+    void testUpdateAccount() {
         String pesel = "12345678901";
-        Account existingAccount = new Account(pesel, "John", "Doe", "accountNumber", 1000.0, 0);
+        UpdateAccountCommand command = new UpdateAccountCommand(pesel, "Jane", "Doe");
+        Account account = new Account(pesel, "John", "Doe", BigDecimal.valueOf(1000), "PLN", "12345678901234567890123456");
 
-        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.of(existingAccount));
+        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.of(account));
+        when(accountRepository.save(any(Account.class))).thenReturn(account);
 
-        // when
+        AccountDto result = accountService.updateAccount(pesel, command);
+
+        assertEquals(command.newName(), result.name());
+        verify(accountRepository, times(1)).findByPesel(pesel);
+        verify(accountRepository, times(1)).save(any(Account.class));
+    }
+
+    @Test
+    void testDeleteAccount() {
+        String pesel = "12345678901";
+        Account account = new Account(pesel, "John", "Doe", BigDecimal.valueOf(1000), "PLN", "12345678901234567890123456");
+
+        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.of(account));
+
         accountService.deleteAccount(pesel);
 
-        // then
         verify(accountRepository, times(1)).findByPesel(pesel);
-        verify(accountRepository, times(1)).delete(existingAccount);
+        verify(accountRepository, times(1)).delete(account);
     }
 
     @Test
-    void testDeleteAccount_ShouldThrowAccountNotFoundException_WhenAccountDoesNotExist() {
-        // given
+    void testCreateSubAccount() {
         String pesel = "12345678901";
+        CreateSubAccountCommand command = new CreateSubAccountCommand("USD");
+        Account account = new Account(pesel, "John", "Doe", BigDecimal.valueOf(1000), "PLN", "12345678901234567890123456");
 
-        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.empty());
+        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.of(account));
+        when(accountRepository.save(any(Account.class))).thenReturn(account);
 
-        // when & then
-        assertThrows(AccountNotFoundException.class, () -> accountService.deleteAccount(pesel));
+        AccountDto result = accountService.createSubAccount(pesel, command);
 
+        assertTrue(result.subAccounts().stream().anyMatch(sa -> sa.currency().equals("USD")));
         verify(accountRepository, times(1)).findByPesel(pesel);
-        verify(accountRepository, never()).delete(any(Account.class));
+        verify(accountRepository, times(1)).save(any(Account.class));
     }
 
     @Test
-    void processExchangeRequest_ShouldUpdateBalancesAndSendSuccessResponse() {
-        // given
+    void testDeleteSubAccount() {
         String pesel = "12345678901";
-        Account account = new Account(pesel, "John", "Doe", "12345678901234567890123456", 1000.0, 0);
+        String currency = "USD";
+        Account account = new Account(pesel, "John", "Doe", BigDecimal.valueOf(1000), "PLN", "12345678901234567890123456");
+        SubAccount subAccount = new SubAccount(BigDecimal.valueOf(1000), currency, "12345678901234567890123456");
+        account.addSubAccount(subAccount);
+
         when(accountRepository.findByPesel(pesel)).thenReturn(Optional.of(account));
 
-        ExchangeRequestDto exchangeRequestDto = new ExchangeRequestDto(1L, pesel, "PLN", "USD", 100.0, 25.0, 0.25);
+        accountService.deleteSubAccount(pesel, currency);
 
-        // when
-        accountService.processExchangeRequest(exchangeRequestDto);
-
-        // then
+        verify(accountRepository, times(1)).findByPesel(pesel);
         verify(accountRepository, times(1)).save(account);
-        verify(exchangeResponseProducer, times(1)).postExchangeResponseDtoToQueue(any(ExchangeResponseDto.class));
     }
 
     @Test
-    void processExchangeRequest_ShouldThrowAccountNotFoundException_WhenAccountDoesNotExist() {
+    void testBuyForeignCurrency() {
+        String pesel = "12345678901";
+        String currency = "USD";
+        BuyForeignCurrencyCommand command = new BuyForeignCurrencyCommand(pesel, BigDecimal.valueOf(100), currency);
+        Account account = new Account(pesel, "John", "Doe", BigDecimal.valueOf(1000), "PLN", "12345678901234567890123456");
+        account.addSubAccount(new SubAccount(BigDecimal.valueOf(1000), currency, "12345678901234567890123456"));
+
+        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.of(account));
+        when(exchangeRateService.getExchangeRate(currency)).thenReturn(4.0);
+
+        BuyTransactionRequest result = accountService.buyForeignCurrency(pesel, command);
+
+        assertEquals(TransactionStatus.COMPLETED, result.transactionStatus());
+        verify(accountRepository, times(1)).findByPesel(pesel);
+    }
+
+    @Test
+    void testBuyForeignCurrency_InsufficientBalance() {
         // given
-        String pesel = "nonexistentPesel";
-        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.empty());
+        BuyForeignCurrencyCommand command = new BuyForeignCurrencyCommand("12345678901", BigDecimal.valueOf(1000), "USD");
+        when(accountRepository.findByPesel("12345678901")).thenReturn(Optional.of(account));
+        when(exchangeRateService.getExchangeRate("USD")).thenReturn(4.0);
 
-        ExchangeRequestDto exchangeRequestDto = new ExchangeRequestDto(1L, pesel, "PLN", "USD", 100.0, 25.0, 0.25);
+        // when
+        BuyTransactionRequest result = accountService.buyForeignCurrency("12345678901", command);
 
-        // when & then
-        assertThrows(AccountNotFoundException.class, () -> accountService.processExchangeRequest(exchangeRequestDto));
+        // then
+        assertEquals(TransactionStatus.FAILED, result.transactionStatus());
+        assertEquals(BigDecimal.valueOf(1000), account.getBalance());
+        assertEquals(BigDecimal.valueOf(1000), subAccount.getBalance());
+    }
+
+    @Test
+    void testBuyForeignCurrency_NoSubAccountInGivenCurrency() {
+        // given
+        BuyForeignCurrencyCommand command = new BuyForeignCurrencyCommand("12345678901", BigDecimal.valueOf(100), "EUR");
+        when(accountRepository.findByPesel("12345678901")).thenReturn(Optional.of(account));
+
+        // when
+        assertThrows(NoSubAccountInGivenCurrencyException.class, () -> {
+            accountService.buyForeignCurrency("12345678901", command);
+        });
+    }
+
+    @Test
+    void testBuyForeignCurrency_PeselMismatch() {
+        // given
+        BuyForeignCurrencyCommand command = new BuyForeignCurrencyCommand("wrongPesel", BigDecimal.valueOf(100), "USD");
+
+        // when
+        assertThrows(PeselFromPathVariableAndRequestBodyNotMatchingException.class, () -> {
+            accountService.buyForeignCurrency("12345678901", command);
+        });
+    }
+
+    @Test
+    void testSellForeignCurrency() {
+        String pesel = "12345678901";
+        String currency = "USD";
+        SellForeignCurrencyCommand command = new SellForeignCurrencyCommand(pesel, BigDecimal.valueOf(100), currency);
+        Account account = new Account(pesel, "John", "Doe", BigDecimal.valueOf(1000), "PLN", "12345678901234567890123456");
+        account.addSubAccount(new SubAccount(BigDecimal.valueOf(1000), currency, "12345678901234567890123456"));
+
+        when(accountRepository.findByPesel(pesel)).thenReturn(Optional.of(account));
+        when(exchangeRateService.getExchangeRate(currency)).thenReturn(4.0);
+
+        SellTransactionRequest result = accountService.sellForeignCurrency(pesel, command);
+
+        assertEquals(TransactionStatus.COMPLETED, result.transactionStatus());
+        verify(accountRepository, times(1)).findByPesel(pesel);
+    }
+
+    @Test
+    void testSellForeignCurrency_InsufficientBalance() {
+        // given
+        SellForeignCurrencyCommand command = new SellForeignCurrencyCommand("12345678901", BigDecimal.valueOf(2000), "USD");
+        when(accountRepository.findByPesel("12345678901")).thenReturn(Optional.of(account));
+        when(exchangeRateService.getExchangeRate("USD")).thenReturn(4.0);
+
+        // when
+        SellTransactionRequest result = accountService.sellForeignCurrency("12345678901", command);
+
+        // then
+        assertEquals(TransactionStatus.FAILED, result.transactionStatus());
+        assertEquals(BigDecimal.valueOf(1000), account.getBalance());
+        assertEquals(BigDecimal.valueOf(1000), subAccount.getBalance());
+    }
+
+    @Test
+    void testSellForeignCurrency_NoSubAccountInGivenCurrency() {
+        // given
+        SellForeignCurrencyCommand command = new SellForeignCurrencyCommand("12345678901", BigDecimal.valueOf(100), "EUR");
+        when(accountRepository.findByPesel("12345678901")).thenReturn(Optional.of(account));
+
+        // when
+        assertThrows(NoSubAccountInGivenCurrencyException.class, () -> {
+            accountService.sellForeignCurrency("12345678901", command);
+        });
+    }
+
+    @Test
+    void testSellForeignCurrency_PeselMismatch() {
+        // given
+        SellForeignCurrencyCommand command = new SellForeignCurrencyCommand("wrongPesel", BigDecimal.valueOf(100), "USD");
+
+        // when
+        assertThrows(PeselFromPathVariableAndRequestBodyNotMatchingException.class, () -> {
+            accountService.sellForeignCurrency("12345678901", command);
+        });
     }
 }

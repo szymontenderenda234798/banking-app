@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="21cedd33-22c2-4871-b776-14540b4b3b98" name="Changes" comment="finished communication between services and tests">
+    <list default="true" id="21cedd33-22c2-4871-b776-14540b4b3b98" name="Changes" comment="working (tests missing)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/resources/application-test.properties" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/resources/application-test.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exchange-service/src/main/resources/changes/create-tables.xml" beforeDir="false" afterPath="$PROJECT_DIR$/exchange-service/src/main/resources/changes/create-tables.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/validate/validator/ForeignCurrencyValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/pl/kurs/java/account/validate/validator/ForeignCurrencyValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/model/AccountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/model/AccountTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/service/AccountServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/service/AccountServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/web/AccountControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/test/java/pl/kurs/java/account/web/AccountControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,9 +21,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="AnnotationType" />
-        <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -30,6 +33,11 @@
   </component>
   <component name="Git.Settings">
     <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -38,12 +46,12 @@
     &quot;assignee&quot;: &quot;szymontenderenda234798&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/szymontenderenda234798/banking-app.git&quot;,
-    &quot;accountId&quot;: &quot;7053a802-7145-4af7-9d19-4eeccac4b8ff&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/szymontenderenda234798/banking-app.git",
+    "accountId": "d74d5873-893d-46dd-b45c-1a67abb89d9d"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -61,6 +69,7 @@
     "JUnit.AccountControllerTest.shouldGetAccount.executor": "Run",
     "JUnit.AccountControllerTest.shouldGetAccounts.executor": "Run",
     "JUnit.AccountControllerTest.shouldGetAllAccounts.executor": "Run",
+    "JUnit.AccountControllerTest.testBuyForeignCurrency_ShouldBuyForeignCurrency_WhenGivenValidData.executor": "Run",
     "JUnit.AccountControllerTest.testCreateAccount_ShouldCountQuerries.executor": "Run",
     "JUnit.AccountControllerTest.testCreateAccount_ShouldCreateAccount_WhenGivenValidData.executor": "Run",
     "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenAccountWithGivenPeselExists.executor": "Run",
@@ -69,11 +78,15 @@
     "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenNegativeBalance.executor": "Run",
     "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenPeselIndicatesUnderage.executor": "Run",
     "JUnit.AccountControllerTest.testCreateAccount_ShouldNotCreateAccount_WhenSurnameContainsNonLetterCharacters.executor": "Run",
+    "JUnit.AccountControllerTest.testCreateSubAccount_ShouldCreateSubAccount_WhenGivenValidData.executor": "Run",
     "JUnit.AccountControllerTest.testDeleteAccount_ShouldDeleteAccount_WhenGivenValidPesel.executor": "Run",
     "JUnit.AccountControllerTest.testDeleteAccount_ShouldReturnNotFound_WhenAccountDoesNotExist.executor": "Run",
+    "JUnit.AccountControllerTest.testDeleteSubAccount_ShouldDeleteSubAccount_WhenGivenValidData.executor": "Run",
     "JUnit.AccountControllerTest.testGetAccount_ShouldReturnBadRequest_WhenInvalidPesel.executor": "Run",
     "JUnit.AccountControllerTest.testGetAccount_ShouldReturnNotFound_WhenInvalidPesel.executor": "Run",
+    "JUnit.AccountControllerTest.testGetAccounts_ShouldGetAllAcounts.executor": "Run",
     "JUnit.AccountControllerTest.testGetAccounts_ShouldReturnAccounts_WhenRequestIsValid.executor": "Run",
+    "JUnit.AccountControllerTest.testSellForeignCurrency_ShouldSellForeignCurrency_WhenGivenValidData.executor": "Run",
     "JUnit.AccountControllerTest.testUpdateAccount_ShouldNotUpdateAccount_WhenNameContainsNonLetterCharacters.executor": "Run",
     "JUnit.AccountControllerTest.testUpdateAccount_ShouldNotUpdateAccount_WhenPeselDoesNotMatch.executor": "Run",
     "JUnit.AccountControllerTest.testUpdateAccount_ShouldReturnNotFound_WhenAccountDoesNotExist.executor": "Run",
@@ -81,6 +94,7 @@
     "JUnit.AccountServiceTest.executor": "Run",
     "JUnit.AccountServiceTest.processExchangeRequest_ShouldThrowAccountNotFoundException_WhenAccountDoesNotExist.executor": "Run",
     "JUnit.AccountServiceTest.processExchangeRequest_ShouldUpdateBalancesAndSendSuccessResponse.executor": "Run",
+    "JUnit.AccountServiceTest.testBuyForeignCurrency_InsufficientBalance.executor": "Run",
     "JUnit.AccountServiceTest.testGenerateRandomAccountNumber_ShouldGenerate26DigitNumber.executor": "Run",
     "JUnit.AccountServiceTest.testGenerateUniqueAccountNumber_ShouldRetryUntilUniqueNumberIsGenerated.executor": "Run",
     "JUnit.AccountServiceTest.testGetAccount_ShouldReturnAccountDto_WhenAccountExists.executor": "Run",
@@ -132,7 +146,7 @@
     "Spring Boot.exchange-service-8900.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "refactoring",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "openjdk-22",
     "kotlin-language-version-configured": "true",
@@ -155,6 +169,9 @@
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="pl.kurs.java.account.validate.annotation" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tende\OneDrive\Desktop\kurs\zadanie\banking-app\exchange-client\src\main\java\pl\kurs\java\client\" />
       <recent name="C:\Users\tende\IdeaProjects\banking-app\account-service\src\main\java\pl\kurs\java\account" />
@@ -167,6 +184,9 @@
       <recent name="C:\Users\tende\OneDrive\Desktop\kurs\zadanie\banking-app\exchange-client\src\main\resources" />
       <recent name="C:\Users\tende\OneDrive\Desktop\kurs\zadanie\banking-app\exchange-client\src\main\java\pl\kurs\java\client\config\properties" />
       <recent name="C:\Users\tende\IdeaProjects\banking-app\currency-exchange-service\src\main\resources\changes" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="pl.kurs.java" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="pl.kurs.java.exchange.web" />
@@ -185,51 +205,79 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.All in banking-app">
-    <configuration name="All in banking-app" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="banking-app" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+  <component name="RunManager" selected="JUnit.pl.kurs.java.account in account-service">
+    <configuration name="AccountControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="account-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.kurs.java.account.web.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.kurs.java.account.web" />
+      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.web.AccountControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExchangeControllerTest.testProcessExchangeRequestCommand_ShouldProcessRequest_WhenGivenValidData" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="exchange-service" />
+    <configuration name="AccountControllerTest.testSellForeignCurrency_ShouldSellForeignCurrency_WhenGivenValidData" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="account-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.kurs.java.exchange.web.*" />
+          <option name="PATTERN" value="pl.kurs.java.account.web.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.kurs.java.exchange.web" />
-      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.exchange.web.ExchangeControllerTest" />
-      <option name="METHOD_NAME" value="testProcessExchangeRequestCommand_ShouldProcessRequest_WhenGivenValidData" />
+      <option name="PACKAGE_NAME" value="pl.kurs.java.account.web" />
+      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.web.AccountControllerTest" />
+      <option name="METHOD_NAME" value="testSellForeignCurrency_ShouldSellForeignCurrency_WhenGivenValidData" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="exchange in exchange-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="exchange-service" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/exchange-service/src/test/java/pl/kurs/java/exchange" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="java in account-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AccountServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="account-service" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/account-service/src/test/java" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.kurs.java.account.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.kurs.java.account.service" />
+      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.service.AccountServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="java in exchange-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="exchange-service" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/exchange-service/src/test/java" />
+    <configuration name="AccountServiceTest.testBuyForeignCurrency_InsufficientBalance" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="account-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.kurs.java.account.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.kurs.java.account.service" />
+      <option name="MAIN_CLASS_NAME" value="pl.kurs.java.account.service.AccountServiceTest" />
+      <option name="METHOD_NAME" value="testBuyForeignCurrency_InsufficientBalance" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="pl.kurs.java.account in account-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="account-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.kurs.java.account.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.kurs.java.account" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -238,7 +286,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="corretto-19" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <module name="account-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="pl.kurs.java.account.Main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="pl.kurs.java.Main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -271,11 +319,11 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.All in banking-app" />
-      <item itemvalue="JUnit.ExchangeControllerTest.testProcessExchangeRequestCommand_ShouldProcessRequest_WhenGivenValidData" />
-      <item itemvalue="JUnit.exchange in exchange-service" />
-      <item itemvalue="JUnit.java in account-service" />
-      <item itemvalue="JUnit.java in exchange-service" />
+      <item itemvalue="JUnit.AccountControllerTest.testSellForeignCurrency_ShouldSellForeignCurrency_WhenGivenValidData" />
+      <item itemvalue="JUnit.AccountServiceTest" />
+      <item itemvalue="JUnit.AccountServiceTest.testBuyForeignCurrency_InsufficientBalance" />
+      <item itemvalue="JUnit.pl.kurs.java.account in account-service" />
+      <item itemvalue="JUnit.AccountControllerTest" />
       <item itemvalue="Spring Boot.exchange-service-8900" />
       <item itemvalue="Spring Boot.account-service-8888" />
       <item itemvalue="Spring Boot.api-gateway-8070" />
@@ -283,11 +331,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in banking-app" />
-        <item itemvalue="JUnit.java in account-service" />
-        <item itemvalue="JUnit.exchange in exchange-service" />
-        <item itemvalue="JUnit.java in exchange-service" />
-        <item itemvalue="JUnit.ExchangeControllerTest.testProcessExchangeRequestCommand_ShouldProcessRequest_WhenGivenValidData" />
+        <item itemvalue="JUnit.pl.kurs.java.account in account-service" />
+        <item itemvalue="JUnit.AccountServiceTest" />
+        <item itemvalue="JUnit.AccountServiceTest.testBuyForeignCurrency_InsufficientBalance" />
+        <item itemvalue="JUnit.AccountControllerTest" />
+        <item itemvalue="JUnit.AccountControllerTest.testSellForeignCurrency_ShouldSellForeignCurrency_WhenGivenValidData" />
       </list>
     </recent_temporary>
   </component>
@@ -318,7 +366,10 @@
       <workItem from="1720426273673" duration="3467000" />
       <workItem from="1720431444588" duration="26223000" />
       <workItem from="1720881660550" duration="10300000" />
-      <workItem from="1720950454658" duration="24134000" />
+      <workItem from="1720950454658" duration="24167000" />
+      <workItem from="1721051636192" duration="2519000" />
+      <workItem from="1722070322694" duration="19187000" />
+      <workItem from="1722256926144" duration="1774000" />
     </task>
     <task id="LOCAL-00001" summary="working on account crud tests (still some testing to do)">
       <option name="closed" value="true" />
@@ -352,7 +403,31 @@
       <option name="project" value="LOCAL" />
       <updated>1721044581510</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fixed liquibase">
+      <option name="closed" value="true" />
+      <created>1721046401815</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1721046401815</updated>
+    </task>
+    <task id="LOCAL-00006" summary="WORKING">
+      <option name="closed" value="true" />
+      <created>1722085086404</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1722085086404</updated>
+    </task>
+    <task id="LOCAL-00007" summary="working (tests missing)">
+      <option name="closed" value="true" />
+      <created>1722194883542</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1722194883542</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -375,6 +450,9 @@
     <MESSAGE value="working on account crud tests (still some testing to do)" />
     <MESSAGE value="work in progress" />
     <MESSAGE value="finished communication between services and tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished communication between services and tests" />
+    <MESSAGE value="fixed liquibase" />
+    <MESSAGE value="WORKING" />
+    <MESSAGE value="working (tests missing)" />
+    <option name="LAST_COMMIT_MESSAGE" value="working (tests missing)" />
   </component>
 </project>
