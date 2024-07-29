@@ -3,17 +3,32 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet id="20240703-szymon-001" author="szymon">
+    <changeSet id="20240729-szymon-001" author="szymon">
         <sql>
             create table accounts
             (
-                pesel    varchar(255) unique not null,
-                name     varchar(255) not null,
-                surname  varchar(255) not null,
+                pesel          varchar(255) unique not null,
+                name           varchar(255)        not null,
+                surname        varchar(255)        not null,
+                balance        decimal(19, 4)      not null,
+                currency       varchar(255)        not null,
                 account_number varchar(255) unique not null,
-                pln_balance float not null,
-                usd_balance float not null,
+
                 primary key (pesel)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="20240729-szymon-002" author="szymon">
+        <sql>
+            create table sub_accounts
+            (
+                id              bigint auto_increment primary key,
+                balance         decimal(19, 4) not null,
+                currency        varchar(255) not null,
+                account_number  varchar(255) unique not null,
+                pesel           varchar(255),
+                foreign key (pesel) references accounts(pesel)
             );
         </sql>
     </changeSet>
