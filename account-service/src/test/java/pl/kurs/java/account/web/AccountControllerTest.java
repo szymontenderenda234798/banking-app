@@ -23,8 +23,13 @@ import pl.kurs.java.account.exception.PeselFromPathVariableAndRequestBodyNotMatc
 import pl.kurs.java.account.model.account.Account;
 import pl.kurs.java.account.model.account.SubAccount;
 import pl.kurs.java.account.model.account.command.CreateAccountCommand;
+import pl.kurs.java.account.model.account.command.CreateSubAccountCommand;
 import pl.kurs.java.account.model.account.command.UpdateAccountCommand;
 import pl.kurs.java.account.model.account.dto.AccountDto;
+import pl.kurs.java.account.model.transaction.command.BuyForeignCurrencyCommand;
+import pl.kurs.java.account.model.transaction.command.SellForeignCurrencyCommand;
+import pl.kurs.java.account.model.transaction.request.BuyTransactionRequest;
+import pl.kurs.java.account.model.transaction.request.SellTransactionRequest;
 import pl.kurs.java.account.repository.AccountRepository;
 import pl.kurs.java.account.service.AccountService;
 
@@ -390,6 +395,112 @@ class AccountControllerTest {
         // then
         verify(accountService, times(1)).deleteAccount(nonExistentPesel);
         verify(accountRepository, never()).delete(any(Account.class));
+    }
+
+    @Test
+    void testCreateSubAccount_ShouldCreateSubAccount_WhenGivenValidData() throws Exception {
+        // given
+        Account account = prepareAccountsInDb().get(0);
+        CreateSubAccountCommand command = new CreateSubAccountCommand("USD");
+
+        // when
+        MvcResult result = mockMvc.perform(post("/api/v1/account/{pesel}/subaccount", account.getPesel())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        // then
+        String response = result.getResponse().getContentAsString();
+        AccountDto accountDto = objectMapper.readValue(response, AccountDto.class);
+
+        assertEquals(account.getPesel(), accountDto.pesel());
+        assertTrue(accountDto.subAccounts().stream().anyMatch(sa -> sa.currency().equals("USD")));
+        verify(accountService, times(1)).createSubAccount(eq(account.getPesel()), any(CreateSubAccountCommand.class));
+    }
+
+    @Test
+    void testDeleteSubAccount_ShouldDeleteSubAccount_WhenGivenValidData() throws Exception {
+        // given
+        Account account = prepareAccountsInDb().get(0);
+        String pesel = account.getPesel();
+        String currency = "USD";
+        account.addSubAccount(new SubAccount(BigDecimal.valueOf(1000), currency, "12345678901234567890123456"));
+        accountRepository.saveAndFlush(account);
+
+        // when
+        mockMvc.perform(delete("/api/v1/account/{pesel}/subaccount/{currency}", pesel, currency)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        // then
+        verify(accountService, times(1)).deleteSubAccount(pesel, currency);
+    }
+
+    @Test
+    void testBuyForeignCurrency_ShouldBuyForeignCurrency_WhenGivenValidData() throws Exception {
+        // given
+        Account account = prepareAccountsInDb().get(0);
+        String pesel = account.getPesel();
+        String currency = "USD";
+        account.addSubAccount(new SubAccount(BigDecimal.valueOf(1000), currency, "12345678901234567890123456"));
+        accountRepository.saveAndFlush(account);
+        BuyForeignCurrencyCommand command = new BuyForeignCurrencyCommand(pesel, BigDecimal.valueOf(100), currency);
+
+        BigDecimal initialBalance = account.getBalance();
+
+        // when
+        MvcResult result = mockMvc.perform(post("/api/v1/account/{pesel}/buy", pesel)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isAccepted())
+                .andReturn();
+
+        // then
+        String response = result.getResponse().getContentAsString();
+        BuyTransactionRequest transactionRequest = objectMapper.readValue(response, BuyTransactionRequest.class);
+
+        assertEquals(pesel, transactionRequest.pesel());
+        assertEquals(currency, transactionRequest.currencyToBuy());
+
+        Account updatedAccount = accountRepository.findByPesel(pesel).orElseThrow();
+        BigDecimal expectedBalance = initialBalance.subtract(transactionRequest.amountToSpend());
+        assertEquals(0, expectedBalance.compareTo(updatedAccount.getBalance()));
+
+        verify(accountService, times(1)).buyForeignCurrency(eq(pesel), any(BuyForeignCurrencyCommand.class));
+    }
+
+    @Test
+    void testSellForeignCurrency_ShouldSellForeignCurrency_WhenGivenValidData() throws Exception {
+        // given
+        Account account = prepareAccountsInDb().get(0);
+        String pesel = account.getPesel();
+        String currency = "USD";
+        account.addSubAccount(new SubAccount(BigDecimal.valueOf(1000), currency, "12345678901234567890123456"));
+        accountRepository.saveAndFlush(account);
+        SellForeignCurrencyCommand command = new SellForeignCurrencyCommand(pesel, BigDecimal.valueOf(100), currency);
+
+        BigDecimal initialBalance = account.getBalance();
+
+        // when
+        MvcResult result = mockMvc.perform(post("/api/v1/account/{pesel}/sell", pesel)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(command)))
+                .andExpect(status().isAccepted())
+                .andReturn();
+
+        // then
+        String response = result.getResponse().getContentAsString();
+        SellTransactionRequest transactionRequest = objectMapper.readValue(response, SellTransactionRequest.class);
+
+        assertEquals(pesel, transactionRequest.pesel());
+        assertEquals(currency, transactionRequest.currencyToSell());
+
+        Account updatedAccount = accountRepository.findByPesel(pesel).orElseThrow();
+        BigDecimal expectedBalance = initialBalance.add(transactionRequest.amountToReceive());
+        assertEquals(0, expectedBalance.compareTo(updatedAccount.getBalance()));
+
+        verify(accountService, times(1)).sellForeignCurrency(eq(pesel), any(SellForeignCurrencyCommand.class));
     }
 
     @Test

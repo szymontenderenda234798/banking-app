@@ -104,33 +104,6 @@ public class AccountService {
         accountRepository.delete(account);
     }
 
-    String generateUniqueAccountNumber() {
-        String accountNumber = generateRandomAccountNumber();
-        while (!isAccountNumberUnique(accountNumber)) {
-            accountNumber = generateRandomAccountNumber();
-        }
-        return accountNumber;
-    }
-
-    String generateRandomAccountNumber() {
-        SecureRandom random = new SecureRandom();
-        StringBuilder number = new StringBuilder();
-
-        // Ensure the first digit is not zero
-        number.append(random.nextInt(9) + 1);
-
-        // Append the remaining 25 digits
-        for (int i = 0; i < 25; i++) {
-            number.append(random.nextInt(10));
-        }
-
-        return number.toString();
-    }
-
-    boolean isAccountNumberUnique(String accountNumber) {
-        return accountRepository.findByAccountNumber(accountNumber).isEmpty();
-    }
-
     @Transactional
     public AccountDto createSubAccount(String pesel, CreateSubAccountCommand createSubAccountCommand) {
         Account account = accountRepository.findByPesel(pesel)
@@ -145,7 +118,11 @@ public class AccountService {
     public void deleteSubAccount(String pesel, String currency) {
         Account account = accountRepository.findByPesel(pesel)
                 .orElseThrow(() -> new AccountNotFoundException(pesel));
-        account.getSubAccounts().removeIf(subAccount -> subAccount.getCurrency().equals(currency));
+        SubAccount subAccount = account.getSubAccounts().stream()
+                .filter(sa -> sa.getCurrency().equals(currency))
+                .findFirst()
+                .orElseThrow(NoSubAccountInGivenCurrencyException::new);
+        account.getSubAccounts().remove(subAccount);
         accountRepository.save(account);
     }
 
@@ -201,5 +178,32 @@ public class AccountService {
         );
 
         return account.sellForeignCurrency(sellTransactionRequest);
+    }
+
+    String generateUniqueAccountNumber() {
+        String accountNumber = generateRandomAccountNumber();
+        while (!isAccountNumberUnique(accountNumber)) {
+            accountNumber = generateRandomAccountNumber();
+        }
+        return accountNumber;
+    }
+
+    String generateRandomAccountNumber() {
+        SecureRandom random = new SecureRandom();
+        StringBuilder number = new StringBuilder();
+
+        // Ensure the first digit is not zero
+        number.append(random.nextInt(9) + 1);
+
+        // Append the remaining 25 digits
+        for (int i = 0; i < 25; i++) {
+            number.append(random.nextInt(10));
+        }
+
+        return number.toString();
+    }
+
+    boolean isAccountNumberUnique(String accountNumber) {
+        return accountRepository.findByAccountNumber(accountNumber).isEmpty();
     }
 }
